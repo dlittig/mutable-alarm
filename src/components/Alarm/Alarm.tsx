@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Text, Switch, View } from "react-native";
+import { Text, View } from "react-native";
 import { AlarmStyle } from "./Alarm.style";
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Switch } from "react-native-paper";
 
 
 const nextAlarm = time => time
@@ -18,7 +19,7 @@ const Alarm = ({time, isEnabled, isMuted, isSnoozed, days, name}) => {
       ) }
 
       { !isMuted && (
-        <Switch value={enabled} onValueChange={toggleSwitch} thumbColor="#0011ee" trackColor="blue" />
+        <Switch value={enabled} onValueChange={toggleSwitch} color="#077aff"/>
       ) }
     </View>
   );

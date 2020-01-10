@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList } from "react-native";
 import { MoreButton } from "../../components/Navigation/Actions";
 import Alarm from "../../components/Alarm";
+import HeaderMenu from "../../components/HeaderMenu";
 
 const data = [
   {
@@ -52,7 +53,7 @@ const AllAlarms = () => (
     data={data}
     renderItem={({ item }) => (
       <Alarm
-        key={item.id}
+        key={item.id.toString()}
         time={item.time}
         isEnabled={item.isEnabled}
         isMuted={false}
@@ -65,7 +66,7 @@ const AllAlarms = () => (
 AllAlarms.navigationOptions = {
   title: "All alarms",
   headerTitle: "Alarms",
-  headerRight: () => <MoreButton tintColor="#333" />
+  headerRight: () => <HeaderMenu />
 };
 
 export default AllAlarms;
