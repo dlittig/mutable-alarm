@@ -1,8 +1,9 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import { MoreButton } from "../../components/Navigation/Actions";
 import Alarm from "../../components/Alarm";
 import HeaderMenu from "../../components/HeaderMenu";
+import { FAB } from "react-native-paper";
 
 const data = [
   {
@@ -47,20 +48,37 @@ const data = [
   }
 ];
 
+const styles = StyleSheet.create({
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+})
+
+
 const AllAlarms = () => (
-  <FlatList
-    bounces={true}
-    data={data}
-    renderItem={({ item }) => (
-      <Alarm
-        key={item.id.toString()}
-        time={item.time}
-        isEnabled={item.isEnabled}
-        isMuted={false}
-      />
-    )}
-    keyExtractor={item => item.id}
-  />
+  <View>
+    <FlatList
+      bounces={true}
+      data={data}
+      renderItem={({ item }) => (
+        <Alarm
+          id={item.id}
+          time={item.time}
+          isEnabled={item.isEnabled}
+          isMuted={false}
+        />
+      )}
+      keyExtractor={item => item.id}
+    />
+    <FAB
+      style={styles.fab}
+      icon="plus"
+      label="Add"
+    />
+  </View>
 );
 
 AllAlarms.navigationOptions = {
