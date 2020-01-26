@@ -1,60 +1,12 @@
 import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
+import { FAB } from "react-native-paper";
+import  { connect } from 'react-redux';
+
 import { MoreButton } from "../../components/Navigation/Actions";
 import Alarm from "../../components/Alarm";
 import HeaderMenu from "../../components/HeaderMenu";
-import { FAB } from "react-native-paper";
-
-const data = [
-  {
-    id: 1,
-    time: "09:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 2,
-    time: "11:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 3,
-    time: "13:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 4,
-    time: "15:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 5,
-    time: "17:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 6,
-    time: "19:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 7,
-    time: "20:00",
-    isEnabled: true,
-    isSnoozed: false
-  },
-  {
-    id: 8,
-    time: "22:00",
-    isEnabled: true,
-    isSnoozed: false
-  }
-];
+import ListEmpty from "../../components/ListEmpty";
 
 const styles = StyleSheet.create({
   fab: {
@@ -65,12 +17,12 @@ const styles = StyleSheet.create({
   },
 })
 
-
-const AllAlarms = () => (
-  <View>
+const AllAlarms = ({alarms}) => (
+  <View style={{flex: 1}}>
     <FlatList
+      contentContainerStyle={{ flexGrow: 1 }}
       bounces={true}
-      data={data}
+      data={Object.values(alarms)}
       renderItem={({ item }) => (
         <Alarm
           id={item.id}
@@ -80,6 +32,7 @@ const AllAlarms = () => (
           isMuted={false}
         />
       )}
+      ListEmptyComponent={ListEmpty}
     />
     <FAB
       style={styles.fab}
@@ -95,4 +48,6 @@ AllAlarms.navigationOptions = {
   headerRight: () => <HeaderMenu />
 };
 
-export default AllAlarms;
+const mapStateToProps = ({alarmsReducer: {alarms}}) => ({alarms})
+
+export default connect(mapStateToProps)(AllAlarms);
