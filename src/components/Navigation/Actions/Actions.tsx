@@ -1,18 +1,13 @@
 import React from "react";
-import styled from 'styled-components';
 import { MaterialIcons } from "@expo/vector-icons";
 
-const TouchableComponent = styled.TouchableOpacity`
-    flex: 2;
-	justify-content: center;
-    align-items: center;
-    width: 40;
-`;
+import { ActionsStyle } from './Actions.style'
+import { TouchableOpacity } from "react-native";
 
 const MoreButton = ({ tintColor }) => (
-  <TouchableComponent>
+  <TouchableOpacity style={ActionsStyle.touchable}>
     <MaterialIcons name="more-vert" size={25} color={tintColor} />
-  </TouchableComponent>
+  </TouchableOpacity>
 );
 
 export { MoreButton };

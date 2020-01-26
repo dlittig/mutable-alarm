@@ -52,7 +52,7 @@ const MutedAlarms = () => (
     bounces={true}
     renderItem={({ item }) => (
       <Alarm
-        key={item.id}
+        id={item.id}
         time={item.time}
         isEnabled={item.isEnabled}
         isMuted={true}
@@ -63,7 +63,7 @@ const MutedAlarms = () => (
 );
 
 MutedAlarms.navigationOptions = {
-    title: "All alarms",
+    title: "Muted alarms",
     headerTitle: "Alarms",
     headerRight: () => <MoreButton tintColor="#333" />
 };
