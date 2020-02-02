@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import { FAB } from "react-native-paper";
 import { connect } from "react-redux";
-import { compose } from 'redux'
+import { compose } from "redux";
 
 import { MoreButton } from "../../components/Navigation/Actions";
 import Alarm from "../../components/Alarm";
@@ -19,31 +19,34 @@ const styles = StyleSheet.create({
   }
 });
 
-const AllAlarms = ({ alarms, navigation }) => (
-  <View style={{ flex: 1 }}>
-    <FlatList
-      contentContainerStyle={{ flexGrow: 1 }}
-      bounces={true}
-      data={Object.values(alarms)}
-      renderItem={({ item }) => (
-        <Alarm
-          id={item.id}
-          time={item.time}
-          isEnabled={item.isEnabled}
-          isSnoozed={item.isSnoozed}
-          isMuted={false}
-        />
-      )}
-      ListEmptyComponent={ListEmpty}
-    />
-    <FAB
-      style={styles.fab}
-      icon="plus"
-      label="Add"
-      onPress={ () => navigation.navigate('AddAlarm') }
-    />
-  </View>
-);
+const AllAlarms = ({ alarms, navigation }) => {
+  console.log(alarms)
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        contentContainerStyle={{ flexGrow: 1 }}
+        bounces={true}
+        data={Object.values(alarms)}
+        renderItem={({ item }) => (
+          <Alarm
+            id={item.id}
+            time={item.time}
+            isEnabled={item.isEnabled}
+            isSnoozed={item.isSnoozed}
+            isMuted={false}
+          />
+        )}
+        ListEmptyComponent={ListEmpty}
+      />
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        label="Add"
+        onPress={() => navigation.navigate("AddAlarm")}
+      />
+    </View>
+  );
+};
 
 AllAlarms.navigationOptions = {
   title: "All alarms",
@@ -53,9 +56,6 @@ AllAlarms.navigationOptions = {
 
 const mapStateToProps = ({ alarmsReducer: { alarms } }) => ({ alarms });
 
-const enhance = compose(
-  connect(mapStateToProps),
-  withNavigation,
-)
+const enhance = compose(connect(mapStateToProps), withNavigation);
 
 export default enhance(AllAlarms);

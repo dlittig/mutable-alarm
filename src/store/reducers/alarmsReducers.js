@@ -10,27 +10,27 @@ export const alarmsReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case AlarmsConstants.ADD_ALARM:
-      const alarm = action.payload;
+      let alarm = action.payload;
       newState = { ...state };
-      newState.alarms[alarms.id] = alarm;
+      newState.alarms[alarm.id] = alarm;
 
       return newState;
     case AlarmsConstants.MUTE_ALARM: {
-      const alarmId = action.payload;
+      let alarmId = action.payload;
       newState = { ...state };
       newState.alarms[alarmId].muted = true;
 
       return newState;
     }
     case AlarmsConstants.UPDATE_ALARM: {
-      const alarm = action.payload;
+      let alarm = action.payload;
       newState = { ...state };
       newAlarms[alarm.id] = alarm;
 
       return newState;
     }
     case AlarmsConstants.DELETE_ALARM:
-      const alarmId = action.payload;
+      let alarmId = action.payload;
       newState = { ...state };
       delete newState.alarms[alarmId];
 

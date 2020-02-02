@@ -1,17 +1,18 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, TextInput, FAB, ToggleButton } from "react-native-paper";
+import { Text, TextInput, FAB } from "react-native-paper";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withNavigation } from "react-navigation";
-import { addAlarm as addAlarmAction } from "./../../store/actions";
+import { addAlarm as addAlarmAction } from "../../store/actions";
 
 import { AddAlarmStyle } from "./AddAlarm.style";
 import DaySelectorRow from "../../components/DaySelectorRow";
+import Time from "../../components/Time";
 
 interface Props {
   navigation: {
-    goBack: any
+    navigate: any;
   };
   reduxAddAlarm: any;
 }
@@ -19,7 +20,18 @@ interface Props {
 interface State {
   text: string;
   weekdays: object;
+  time: string;
 }
+
+const INITIAL_VALUES = {
+  monday: false,
+  tuesday: false,
+  wednesday: false,
+  thursday: false,
+  friday: false,
+  saturday: false,
+  sunday: false
+};
 
 class AddAlarm extends React.Component<Props, State> {
   state = {
@@ -32,41 +44,31 @@ class AddAlarm extends React.Component<Props, State> {
       Fr: false,
       Sa: false,
       Su: false
-    }
+    },
+    time: new Date().toString()
   };
 
   onSave = () => {
     const { reduxAddAlarm, navigation } = this.props;
     const model = {
+      id: new Date().getTime(),
+      time: this.state.time,
+      isEnabled: true, isMuted : false,
+      isSnoozed: false,
+      days: 0,
       name: this.state.text
     };
 
     reduxAddAlarm(model);
-    navigation.goBack();
+    navigation.navigate("Main");
   };
 
   render() {
-    const initialValues = {
-      "monday": false,
-      "tuesday": false,
-      "wednesday": false,
-      "thursday": false,
-      "friday": false,
-      "saturday": false,
-      "sunday": false,
-    }
-
     return (
       <View style={AddAlarmStyle.container}>
-        <Text>I want to add an alarm!</Text>
-        <TextInput
-          mode="outlined"
-          label="Name"
-          value={this.state.text}
-          onChangeText={text => this.setState({ text })}
-        />
+        <Time time={this.state.time} onChange={time => this.setState({time})} />
 
-        <DaySelectorRow initialValues={initialValues} />
+        <DaySelectorRow initialValues={INITIAL_VALUES} />
 
         <TextInput
           mode="outlined"
