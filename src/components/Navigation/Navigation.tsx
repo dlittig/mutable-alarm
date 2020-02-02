@@ -10,6 +10,7 @@ import AllAlarms from "../../screens/AllAlarms";
 import MutedAlarms from "../../screens/MutedAlarms";
 import Timer from "../../screens/Timer";
 import Stopwatch from "../../screens/Stopwatch";
+import AddAlarm from "../../screens/AddAlarm";
 
 const ALL_ALARMS = "Alarms";
 const TIMER = "Timer";
@@ -43,11 +44,21 @@ const TimerStack = createStackNavigator({
   TimerStack: {
     screen: Timer
   }
+}, {
+  headerMode: "none",
+  navigationOptions: {
+    headerVisible: false
+  }
 });
 
 const StopwatchStack = createStackNavigator({
   StopwatchStack: {
     screen: Stopwatch
+  }
+}, {
+  headerMode: "none",
+  navigationOptions: {
+    headerVisible: false
   }
 });
 
@@ -61,6 +72,13 @@ const TabNavigator = createBottomTabNavigator(
     initialRouteName: ALL_ALARMS,
     tabBarOptions: {
       showIcon: true
+    },
+    navigationOptions: {
+      headerStyle: {
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
+        borderBottomWidth: 0
+      }
     },
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -81,10 +99,33 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
+const AddAlarmStack = createStackNavigator(
+  {
+    AddAlarm: {
+      screen: AddAlarm
+    }
+  },
+  {
+    mode: "modal",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+      headerStyle: {
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
+        borderBottomWidth: 0
+      }
+    }
+  }
+);
+
 const MainNavigator = createStackNavigator(
   {
     Main: {
       screen: TabNavigator
+    },
+    AddAlarmStack: {
+      screen: AddAlarmStack
     }
   },
   {
@@ -94,7 +135,8 @@ const MainNavigator = createStackNavigator(
         shadowOpacity: 0, // remove shadow on iOS
         borderBottomWidth: 0
       }
-    }
+    },
+    initialRouteName: "Main"
   }
 );
 
