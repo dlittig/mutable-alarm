@@ -1,45 +1,32 @@
 import * as AlarmsConstants from "../constants/alarmsConstants";
+import produce from "immer";
 
 const initialState = {
   alarms: {},
   sortedAlarms: []
 };
 
-export const alarmsReducer = (state = initialState, action) => {
-  let newState = {}
-
+export const alarmsReducer = produce((state = initialState, action) => {
   switch (action.type) {
     case AlarmsConstants.ADD_ALARM:
       let alarm = action.payload;
-      newState = { ...state };
-      newState.alarms[alarm.id] = alarm;
-
-      return newState;
+      state.alarms[alarm.id] = alarm;
     case AlarmsConstants.MUTE_ALARM: {
       let alarmId = action.payload;
-      newState = { ...state };
-      newState.alarms[alarmId].muted = true;
-
-      return newState;
+      state.alarms[alarmId].muted = true;
     }
     case AlarmsConstants.UPDATE_ALARM: {
       let alarm = action.payload;
-      newState = { ...state };
-      newAlarms[alarm.id] = alarm;
-
-      return newState;
+      alarm[alarm.id] = alarm;
     }
-    case AlarmsConstants.DELETE_ALARM:
+    case AlarmsConstants.DELETE_ALARM: {
       let alarmId = action.payload;
-      newState = { ...state };
-      delete newState.alarms[alarmId];
+      delete state.alarms[alarmId];
 
       // Remove item from array
-      newState.sortedAlerts = state.sortedAlarms.filter(item => item.id !== alarmId);
-
-      return newState;
-    default:
-      return state;
+      state.sortedAlerts = state.sortedAlarms.filter(
+        item => item.id !== alarmId
+      );
+    }
   }
-};
-
+}, initialState);

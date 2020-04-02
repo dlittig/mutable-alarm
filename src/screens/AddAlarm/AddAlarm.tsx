@@ -9,6 +9,7 @@ import { addAlarm as addAlarmAction } from "../../store/actions";
 import { AddAlarmStyle } from "./AddAlarm.style";
 import DaySelectorRow from "../../components/DaySelectorRow";
 import Time from "../../components/Time";
+import { Alarm } from "../../models/Alarm";
 
 interface Props {
   navigation: {
@@ -50,14 +51,14 @@ class AddAlarm extends React.Component<Props, State> {
 
   onSave = () => {
     const { reduxAddAlarm, navigation } = this.props;
-    const model = {
-      id: new Date().getTime(),
-      time: this.state.time,
-      isEnabled: true, isMuted : false,
-      isSnoozed: false,
-      days: 0,
-      name: this.state.text
-    };
+    const model = new Alarm();
+    model.id = new Date().getTime();
+    model.time = this.state.time;
+    model.isEnabled = true;
+    model.isMuted = false;
+    model.isSnoozed = false;
+    model.days = 0;
+    model.name = this.state.text;
 
     reduxAddAlarm(model);
     navigation.navigate("Main");
@@ -66,7 +67,10 @@ class AddAlarm extends React.Component<Props, State> {
   render() {
     return (
       <View style={AddAlarmStyle.container}>
-        <Time time={this.state.time} onChange={time => this.setState({time})} />
+        <Time
+          time={this.state.time}
+          onChange={time => this.setState({ time })}
+        />
 
         <DaySelectorRow initialValues={INITIAL_VALUES} />
 
