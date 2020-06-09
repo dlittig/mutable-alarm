@@ -9,7 +9,7 @@ const AlarmStyle = StyleSheet.create({
     //borderWidth: 1,
     //borderColor: 'red',
     justifyContent: "space-between",
-    borderRadius: 5,
+    borderRadius: 10,
     height: 80,
     backgroundColor: "#fff",
     shadowColor: "#000",
@@ -19,7 +19,7 @@ const AlarmStyle = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 2
+    elevation: 4
   },
   text: {
       fontSize: 30

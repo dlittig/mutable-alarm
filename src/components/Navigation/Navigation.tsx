@@ -10,7 +10,9 @@ import AllAlarms from "../../screens/AllAlarms";
 import MutedAlarms from "../../screens/MutedAlarms";
 import Timer from "../../screens/Timer";
 import Stopwatch from "../../screens/Stopwatch";
+import AddAlarm from "../../screens/AddAlarm";
 
+const APP_NAME = "Mutable Alarms";
 const ALL_ALARMS = "Alarms";
 const TIMER = "Timer";
 const STOPWATCH = "Stopwatch";
@@ -35,21 +37,38 @@ const AllAlarmsStack = createMaterialTopTabNavigator(
       indicatorStyle: {
         backgroundColor: "#077aff"
       }
+    },
+    swipeEnabled: false
+  }
+);
+
+const TimerStack = createStackNavigator(
+  {
+    TimerStack: {
+      screen: Timer
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
     }
   }
 );
 
-const TimerStack = createStackNavigator({
-  TimerStack: {
-    screen: Timer
+const StopwatchStack = createStackNavigator(
+  {
+    StopwatchStack: {
+      screen: Stopwatch
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
   }
-});
-
-const StopwatchStack = createStackNavigator({
-  StopwatchStack: {
-    screen: Stopwatch
-  }
-});
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -61,6 +80,13 @@ const TabNavigator = createBottomTabNavigator(
     initialRouteName: ALL_ALARMS,
     tabBarOptions: {
       showIcon: true
+    },
+    navigationOptions: {
+      headerStyle: {
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
+        borderBottomWidth: 0
+      }
     },
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -81,10 +107,33 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
+const AddAlarmStack = createStackNavigator(
+  {
+    AddAlarm: {
+      screen: AddAlarm
+    }
+  },
+  {
+    mode: "modal",
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+      headerStyle: {
+        elevation: 0, // remove shadow on Android
+        shadowOpacity: 0, // remove shadow on iOS
+        borderBottomWidth: 0
+      }
+    }
+  }
+);
+
 const MainNavigator = createStackNavigator(
   {
-    Main: {
+    [APP_NAME]: {
       screen: TabNavigator
+    },
+    AddAlarmStack: {
+      screen: AddAlarmStack
     }
   },
   {
@@ -94,7 +143,8 @@ const MainNavigator = createStackNavigator(
         shadowOpacity: 0, // remove shadow on iOS
         borderBottomWidth: 0
       }
-    }
+    },
+    initialRouteName: APP_NAME
   }
 );
 
