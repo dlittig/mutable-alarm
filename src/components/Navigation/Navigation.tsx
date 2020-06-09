@@ -12,6 +12,7 @@ import Timer from "../../screens/Timer";
 import Stopwatch from "../../screens/Stopwatch";
 import AddAlarm from "../../screens/AddAlarm";
 
+const APP_NAME = "Mutable Alarms";
 const ALL_ALARMS = "Alarms";
 const TIMER = "Timer";
 const STOPWATCH = "Stopwatch";
@@ -36,31 +37,38 @@ const AllAlarmsStack = createMaterialTopTabNavigator(
       indicatorStyle: {
         backgroundColor: "#077aff"
       }
+    },
+    swipeEnabled: false
+  }
+);
+
+const TimerStack = createStackNavigator(
+  {
+    TimerStack: {
+      screen: Timer
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
     }
   }
 );
 
-const TimerStack = createStackNavigator({
-  TimerStack: {
-    screen: Timer
+const StopwatchStack = createStackNavigator(
+  {
+    StopwatchStack: {
+      screen: Stopwatch
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
   }
-}, {
-  headerMode: "none",
-  navigationOptions: {
-    headerVisible: false
-  }
-});
-
-const StopwatchStack = createStackNavigator({
-  StopwatchStack: {
-    screen: Stopwatch
-  }
-}, {
-  headerMode: "none",
-  navigationOptions: {
-    headerVisible: false
-  }
-});
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -121,7 +129,7 @@ const AddAlarmStack = createStackNavigator(
 
 const MainNavigator = createStackNavigator(
   {
-    Main: {
+    [APP_NAME]: {
       screen: TabNavigator
     },
     AddAlarmStack: {
@@ -136,7 +144,7 @@ const MainNavigator = createStackNavigator(
         borderBottomWidth: 0
       }
     },
-    initialRouteName: "Main"
+    initialRouteName: APP_NAME
   }
 );
 

@@ -9,7 +9,7 @@ import { addAlarm as addAlarmAction } from "../../store/actions";
 import { AddAlarmStyle } from "./AddAlarm.style";
 import DaySelectorRow from "../../components/DaySelectorRow";
 import Time from "../../components/Time";
-import { Alarm } from "../../models/Alarm";
+import Alarm from "../../models/Alarm";
 
 interface Props {
   navigation: {
