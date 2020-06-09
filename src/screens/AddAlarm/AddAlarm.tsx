@@ -10,6 +10,7 @@ import { AddAlarmStyle } from "./AddAlarm.style";
 import DaySelectorRow from "../../components/DaySelectorRow";
 import Time from "../../components/Time";
 import Alarm from "../../models/Alarm";
+import Routes from "../../routes";
 
 interface Props {
   navigation: {
@@ -61,7 +62,7 @@ class AddAlarm extends React.Component<Props, State> {
     model.name = this.state.text;
 
     reduxAddAlarm(model);
-    navigation.navigate("Main");
+    navigation.navigate(Routes.APP_NAME);
   };
 
   render() {
