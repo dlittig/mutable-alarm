@@ -8,6 +8,7 @@ import Alarm from "../../components/Alarm";
 import HeaderMenu from "../../components/HeaderMenu";
 import { withNavigation } from "react-navigation";
 import FabFlatList from "../../components/FabFlatList";
+import Routes from "../../routes";
 
 const styles = StyleSheet.create({
   fab: {
@@ -34,7 +35,7 @@ const AllAlarms = ({ alarms, navigation }) => {
         items={Object.values(alarms)}
         fabIcon="plus"
         fabLabel="Add"
-        onFabPress={() => navigation.navigate("AddAlarm")}
+        onFabPress={() => navigation.navigate(Routes.ADD_ALARM)}
       />
     </View>
   );
