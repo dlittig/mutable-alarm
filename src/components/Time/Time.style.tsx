@@ -10,6 +10,7 @@ const TimeStyle = StyleSheet.create({
   },
   text: {
     fontSize: 70,
+    color: '#595959'
   }
 });
 

@@ -15,7 +15,7 @@ const DaySelectorRow = ({ initialValues }) => {
   const [sunday, setSunday] = useState(initialValues["sunday"]);
 
   return (
-    <ScrollView horizontal={true} style={DaySelectorRowStyle.container}>
+    <ScrollView horizontal={true} style={DaySelectorRowStyle.container} contentContainerStyle={DaySelectorRowStyle.content}>
       <Item onChange={setMonday} value={monday}>
         Mo
       </Item>

@@ -8,6 +8,7 @@ const ItemStyle = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 4,
     minWidth: 40,
+    flexGrow: 1,
   },
   text: {
     textAlign: "center"

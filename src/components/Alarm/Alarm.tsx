@@ -8,15 +8,15 @@ import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture
 
 const nextAlarm = time => time;
 
-const Alarm = ({ id, time, isEnabled, isMuted, isSnoozed, days, name }) => {
-  const [enabled, setEnabled] = useState(isEnabled);
-  const toggleSwitch = () => setEnabled(!enabled);
+const Alarm = ({ id, time, isMuted, isSnoozed, days, name }) => {
+  const [muted, setMuted] = useState(isMuted);
+  const toggleSwitch = () => setMuted(!muted);
 
   return (
     <TouchableWithoutFeedback>
       <View style={AlarmStyle.container} key={id}>
         <Text style={AlarmStyle.text}>{getCurrentTime(time)}</Text>
-        {isMuted && <MaterialCommunityIcons name="restore" size={25} />}
+        {muted && <MaterialCommunityIcons name="restore" size={25} />}
       </View>
     </TouchableWithoutFeedback>
   );

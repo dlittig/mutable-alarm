@@ -1,14 +1,15 @@
 import React from "react";
-import { View } from "react-native";
-import { Text, TextInput, FAB } from "react-native-paper";
+import { View, ToastAndroid } from "react-native";
+import uuid from "react-native-uuid";
+import { TextInput, FAB, Caption } from "react-native-paper";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withNavigation } from "react-navigation";
 import { addAlarm as addAlarmAction } from "../../store/actions";
 
 import { AddAlarmStyle } from "./AddAlarm.style";
-import DaySelectorRow from "../../components/DaySelectorRow";
 import Time from "../../components/Time";
+import ScheduleDialog from "../../components/ScheduleDialog";
 import Alarm from "../../models/Alarm";
 import Routes from "../../routes";
 
@@ -16,76 +17,87 @@ interface Props {
   navigation: {
     navigate: any;
   };
-  reduxAddAlarm: any;
+  reduxAddAlarm: (object) => void;
 }
 
 interface State {
   text: string;
-  weekdays: object;
-  time: string;
+  weekdays: Array<string>;
+  time: number;
+  scheduleValue: number;
+  scheduleMode: string | null;
 }
-
-const INITIAL_VALUES = {
-  monday: false,
-  tuesday: false,
-  wednesday: false,
-  thursday: false,
-  friday: false,
-  saturday: false,
-  sunday: false
-};
 
 class AddAlarm extends React.Component<Props, State> {
   state = {
     text: "",
-    weekdays: {
-      Mo: false,
-      Tu: false,
-      We: false,
-      Th: false,
-      Fr: false,
-      Sa: false,
-      Su: false
-    },
-    time: new Date().toString()
+    weekdays: [],
+    time: new Date().getTime(),
+    scheduleValue: 0,
+    scheduleMode: null,
   };
 
   onSave = () => {
+    if (this.state.text === "") {
+      ToastAndroid.showWithGravityAndOffset(
+        "Please give your alarm a name!",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        0,
+        200
+      );
+
+      return false;
+    }
+
     const { reduxAddAlarm, navigation } = this.props;
     const model = new Alarm();
-    model.id = new Date().getTime();
+    model.id = uuid.v1();
     model.time = this.state.time;
-    model.isEnabled = true;
     model.isMuted = false;
     model.isSnoozed = false;
-    model.days = 0;
+    model.weekdays = this.state.weekdays;
     model.name = this.state.text;
 
     reduxAddAlarm(model);
     navigation.navigate(Routes.APP_NAME);
   };
 
+  onDoneDialog = (value, mode, daysSelected) => {
+    this.setState({
+      scheduleValue: value,
+      scheduleMode: mode,
+      weekdays: daysSelected,
+    });
+  };
+
   render() {
     return (
       <View style={AddAlarmStyle.container}>
         <Time
-          time={this.state.time}
-          onChange={time => this.setState({ time })}
+          time={new Date(this.state.time)}
+          onChange={(time) => this.setState({ time })}
         />
-
-        <DaySelectorRow initialValues={INITIAL_VALUES} />
 
         <TextInput
           mode="outlined"
           label="Name"
           value={this.state.text}
-          onChangeText={text => this.setState({ text })}
+          onChangeText={(text) => this.setState({ text })}
         />
+
+        <ScheduleDialog onDone={this.onDoneDialog} />
+
+        <Caption>
+          { this.state.weekdays.map(item => item)}
+          { " every "}
+          { `${this.state.scheduleValue} ${this.state.scheduleMode}`}
+        </Caption>
 
         <FAB
           style={AddAlarmStyle.fab}
-          icon="plus"
-          label="Add"
+          icon="check"
+          label="Save"
           onPress={this.onSave}
         />
       </View>
@@ -96,7 +108,7 @@ class AddAlarm extends React.Component<Props, State> {
 const mapStateToProps = ({ navigation }) => ({ navigation });
 
 const mapDispatchToProps = {
-  reduxAddAlarm: addAlarmAction
+  reduxAddAlarm: addAlarmAction,
 };
 
 const enhance = compose(

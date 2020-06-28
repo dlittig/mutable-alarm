@@ -18,7 +18,7 @@ export default class HeaderMenu extends React.Component {
 
   render() {
     const { visible } = this.state;
-    console.log(visible);
+
     return (
       <Provider>
         <View

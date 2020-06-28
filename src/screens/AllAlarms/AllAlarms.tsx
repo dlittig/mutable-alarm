@@ -1,34 +1,23 @@
 import React from "react";
-import { FlatList, View, StyleSheet, Text } from "react-native";
-import { SwipeRow } from "react-native-swipe-list-view";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import Alarm from "../../components/Alarm";
 import HeaderMenu from "../../components/HeaderMenu";
 import { withNavigation } from "react-navigation";
 import FabFlatList from "../../components/FabFlatList";
 import Routes from "../../routes";
+import { deleteAlarm } from "../../store/actions"
 
-const styles = StyleSheet.create({
-  fab: {
-    position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-  actions: {
-    alignItems: "center",
-    backgroundColor: "#8BC645",
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15,
-  },
-});
+const AllAlarms = ({ alarms, navigation, reduxDeleteAlarm }) => {
+  console.log("all alarms", alarms);
 
-const AllAlarms = ({ alarms, navigation }) => {
-  console.log(alarms);
+  // [...Object.values(alarms)].forEach((item) => {
+  //   if(item.id === null) {
+  //     reduxDeleteAlarm(null)
+  //   }
+  // })
+
   return (
     <View style={{ flex: 1 }}>
       <FabFlatList
@@ -49,6 +38,10 @@ AllAlarms.navigationOptions = {
 
 const mapStateToProps = ({ alarmsReducer: { alarms } }) => ({ alarms });
 
-const enhance = compose(connect(mapStateToProps), withNavigation);
+const mapDispatchToProps = {
+  reduxDeleteAlarm: deleteAlarm
+}
+
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps), withNavigation);
 
 export default enhance(AllAlarms);

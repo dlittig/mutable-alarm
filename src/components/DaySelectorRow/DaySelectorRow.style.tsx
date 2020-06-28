@@ -5,7 +5,11 @@ const DaySelectorRowStyle = StyleSheet.create({
     flexGrow: 0,
     marginTop: 15,
     marginBottom: 15,
-  }
+    flexDirection: "row",
+  },
+  content: {
+    justifyContent: "space-around",
+  },
 });
 
 export { DaySelectorRowStyle };
