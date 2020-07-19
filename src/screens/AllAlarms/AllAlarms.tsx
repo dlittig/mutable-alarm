@@ -1,22 +1,16 @@
 import React from "react";
-import { View } from "react-native";
+
+import FabFlatList from "../../components/FabFlatList";
+import HeaderMenu from "../../components/HeaderMenu";
+import Routes from "../../routes";
+import { useNavigation } from "@react-navigation/native";
+import { deleteAlarm } from "../../store/actions"
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { View } from "react-native";
 
-import HeaderMenu from "../../components/HeaderMenu";
-import { withNavigation } from "react-navigation";
-import FabFlatList from "../../components/FabFlatList";
-import Routes from "../../routes";
-import { deleteAlarm } from "../../store/actions"
-
-const AllAlarms = ({ alarms, navigation, reduxDeleteAlarm }) => {
-  console.log("all alarms", alarms);
-
-  // [...Object.values(alarms)].forEach((item) => {
-  //   if(item.id === null) {
-  //     reduxDeleteAlarm(null)
-  //   }
-  // })
+const AllAlarms = ({ alarms, reduxDeleteAlarm }) => {
+  const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,6 +36,6 @@ const mapDispatchToProps = {
   reduxDeleteAlarm: deleteAlarm
 }
 
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps), withNavigation);
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
 
 export default enhance(AllAlarms);

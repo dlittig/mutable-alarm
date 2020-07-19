@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import { View, ToastAndroid } from "react-native";
 import uuid from "react-native-uuid";
 import { TextInput, FAB, Caption } from "react-native-paper";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { withNavigation } from "react-navigation";
 import { addAlarm as addAlarmAction } from "../../store/actions";
 
 import { AddAlarmStyle } from "./AddAlarm.style";
@@ -12,6 +11,7 @@ import Time from "../../components/Time";
 import ScheduleDialog from "../../components/ScheduleDialog";
 import Alarm from "../../models/Alarm";
 import Routes from "../../routes";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   navigation: {
@@ -20,25 +20,17 @@ interface Props {
   reduxAddAlarm: (object) => void;
 }
 
-interface State {
-  text: string;
-  weekdays: Array<string>;
-  time: number;
-  scheduleValue: number;
-  scheduleMode: string | null;
-}
+const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
+  const navigation = useNavigation();
 
-class AddAlarm extends React.Component<Props, State> {
-  state = {
-    text: "",
-    weekdays: [],
-    time: new Date().getTime(),
-    scheduleValue: 0,
-    scheduleMode: null,
-  };
+  const [text, setText] = useState("");
+  const [weekdays, setWeekdays] = useState([]);
+  const [time, setTime] = useState(new Date().getTime());
+  const [scheduleValue, setScheduleValue] = useState(0);
+  const [scheduleMode, setScheduleMode] = useState(null);
 
-  onSave = () => {
-    if (this.state.text === "") {
+  const onSave = () => {
+    if (text === "") {
       ToastAndroid.showWithGravityAndOffset(
         "Please give your alarm a name!",
         ToastAndroid.SHORT,
@@ -50,70 +42,57 @@ class AddAlarm extends React.Component<Props, State> {
       return false;
     }
 
-    const { reduxAddAlarm, navigation } = this.props;
     const model = new Alarm();
     model.id = uuid.v1();
-    model.time = this.state.time;
+    model.time = time;
     model.isMuted = false;
     model.isSnoozed = false;
-    model.weekdays = this.state.weekdays;
-    model.name = this.state.text;
+    model.weekdays = weekdays;
+    model.name = text;
 
     reduxAddAlarm(model);
     navigation.navigate(Routes.APP_NAME);
   };
 
-  onDoneDialog = (value, mode, daysSelected) => {
-    this.setState({
-      scheduleValue: value,
-      scheduleMode: mode,
-      weekdays: daysSelected,
-    });
+  const onDoneDialog = (value, mode, daysSelected) => {
+    setScheduleValue(value);
+    setScheduleMode(mode);
+    setWeekdays(daysSelected);
   };
 
-  render() {
-    return (
-      <View style={AddAlarmStyle.container}>
-        <Time
-          time={new Date(this.state.time)}
-          onChange={(time) => this.setState({ time })}
-        />
+  return (
+    <View style={AddAlarmStyle.container}>
+      <Time time={new Date(time)} onChange={(time) => setTime(time)} />
 
-        <TextInput
-          mode="outlined"
-          label="Name"
-          value={this.state.text}
-          onChangeText={(text) => this.setState({ text })}
-        />
+      <TextInput
+        mode="outlined"
+        label="Name"
+        value={text}
+        onChangeText={(text) => setText(text)}
+      />
 
-        <ScheduleDialog onDone={this.onDoneDialog} />
+      <ScheduleDialog onDone={onDoneDialog} />
 
-        <Caption>
-          { this.state.weekdays.map(item => item)}
-          { " every "}
-          { `${this.state.scheduleValue} ${this.state.scheduleMode}`}
-        </Caption>
+      <Caption>
+        {weekdays.map((item) => item)}
+        {" every "}
+        {`${scheduleValue} ${scheduleMode}`}
+      </Caption>
 
-        <FAB
-          style={AddAlarmStyle.fab}
-          icon="check"
-          label="Save"
-          onPress={this.onSave}
-        />
-      </View>
-    );
-  }
-}
-
-const mapStateToProps = ({ navigation }) => ({ navigation });
+      <FAB
+        style={AddAlarmStyle.fab}
+        icon="check"
+        label="Save"
+        onPress={onSave}
+      />
+    </View>
+  );
+};
 
 const mapDispatchToProps = {
   reduxAddAlarm: addAlarmAction,
 };
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-);
+const enhance = compose(connect(null, mapDispatchToProps));
 
 export default enhance(AddAlarm);
