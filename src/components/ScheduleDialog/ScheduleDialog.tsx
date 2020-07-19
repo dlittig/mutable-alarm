@@ -97,6 +97,7 @@ const ScheduleDialog = ({ onDone }) => {
             ))}
           </Dialog.Content>
           <Dialog.Actions>
+            <Button onPress={() => setVisible(false)}>Cancel</Button>
             <Button
               onPress={() => {
                 setVisible(false);

@@ -5,13 +5,12 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { Provider } from "react-redux";
 
 import { store, persistor } from "./src/store";
-import RootNavigator from "./src/components/Navigation/RootNavigator";
+import RootNavigator from "./src/components/Navigation";
 
 const App = () => (
   <NavigationContainer>
     <PaperProvider>
       <Provider store={store}>
-        {/*<Navigation />*/}
         <RootNavigator />
       </Provider>
     </PaperProvider>

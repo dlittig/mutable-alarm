@@ -1,2 +1,2 @@
-import Navigation from './Navigation'
-export default Navigation
+import Navigator from './RootNavigator'
+export default Navigator
