@@ -5,7 +5,8 @@ import reducers from "./reducers";
 
 const persistConfig = {
   key: "root",
-  storage: createSecureStore()
+  storage: createSecureStore(),
+  blacklist: ["panelReducer"],
 };
 
 const reducer = persistCombineReducers(persistConfig, reducers);
@@ -13,6 +14,6 @@ const reducer = persistCombineReducers(persistConfig, reducers);
 const initialState = {};
 
 const store = createStore(reducer, initialState);
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
 export { store, persistor };

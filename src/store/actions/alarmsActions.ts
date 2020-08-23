@@ -1,21 +1,21 @@
 import * as AlarmsConstants from "../constants/alarmsConstants";
 
-export const addAlarm = alarm => ({
+export const addAlarm = (alarm) => ({
   type: AlarmsConstants.ADD_ALARM,
-  payload: alarm
-})
+  payload: alarm,
+});
 
-export const updateAlarm = alarm => ({
+export const updateAlarm = (alarm) => ({
   type: AlarmsConstants.UPDATE_ALARM,
-  payload: alarm
-})
+  payload: alarm,
+});
 
-export const muteAlarm = alarmId => ({
+export const muteAlarm = (alarmId) => ({
   type: AlarmsConstants.MUTE_ALARM,
-  payload: alarmId
-})
+  payload: alarmId,
+});
 
-export const deleteAlarm = alarmId => ({
+export const deleteAlarm = (alarmId) => ({
   type: AlarmsConstants.DELETE_ALARM,
-  payload: alarmId
-})
+  payload: alarmId,
+});

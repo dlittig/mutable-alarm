@@ -3,15 +3,16 @@ import produce from "immer";
 
 const initialState = {
   alarms: {},
-  sortedAlarms: []
+  sortedAlarms: [],
 };
 
 export const alarmsReducer = produce((state = initialState, action) => {
   switch (action.type) {
-    case AlarmsConstants.ADD_ALARM:
+    case AlarmsConstants.ADD_ALARM: {
       let alarm = action.payload;
       state.alarms[alarm.id] = alarm;
       break;
+    }
     case AlarmsConstants.MUTE_ALARM: {
       let alarmId = action.payload;
       state.alarms[alarmId].muted = true;
@@ -28,7 +29,7 @@ export const alarmsReducer = produce((state = initialState, action) => {
 
       // Remove item from array
       state.sortedAlerts = state.sortedAlarms.filter(
-        item => item.id !== alarmId
+        (item) => item.id !== alarmId
       );
       break;
     }

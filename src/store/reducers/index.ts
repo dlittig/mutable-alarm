@@ -1,7 +1,9 @@
 import { alarmsReducer } from "./alarmsReducers";
+import { panelReducer } from "./panelReducer";
 
 const reducers = {
-  alarmsReducer
+  alarmsReducer,
+  panelReducer,
 };
 
 export default reducers;

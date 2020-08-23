@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default class HeaderMenu extends React.Component {
   state = {
-    visible: false
+    visible: false,
   };
 
   toggleMenu = () => this.setState({ visible: !this.state.visible });
@@ -13,11 +13,13 @@ export default class HeaderMenu extends React.Component {
   getMenuIcon = () =>
     Platform.select({
       ios: () => <Ionicons name="ios-more" size={25} />,
-      android: () => <Ionicons name="md-more" size={25} />
+      android: () => <Ionicons name="md-more" size={25} />,
     })();
 
   render() {
     const { visible } = this.state;
+
+    console.log("isVisible", visible);
 
     return (
       <Provider>
@@ -25,7 +27,7 @@ export default class HeaderMenu extends React.Component {
           style={{
             zIndex: 300,
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <Menu
