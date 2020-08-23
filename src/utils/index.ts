@@ -35,12 +35,12 @@ export const sortBy = (target, sortProperty, order = "ASC") =>
     }
 
     if (left < right) {
-      return order === "ASC" ? -1 : 1;
+      return order === "ASC" ? 1 : -1;
     }
 
     if (left === right) {
       return 0;
     }
 
-    return order === "ASC" ? 1 : -1;
+    return order === "ASC" ? -1 : 1;
   }) || [];

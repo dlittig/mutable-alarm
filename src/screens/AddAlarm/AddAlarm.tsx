@@ -49,6 +49,8 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
     model.isSnoozed = false;
     model.weekdays = weekdays;
     model.name = text;
+    model.scheduleMode = scheduleMode;
+    model.scheduleValue = scheduleValue;
 
     reduxAddAlarm(model);
     navigation.navigate(Routes.APP_NAME);

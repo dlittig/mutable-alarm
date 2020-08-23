@@ -1,4 +1,4 @@
-import { IAlarm } from '../typings/AlarmType'
+import { IAlarm } from "../typings/AlarmType";
 
 export default class Alarm implements IAlarm {
   id = "";
@@ -7,4 +7,6 @@ export default class Alarm implements IAlarm {
   isSnoozed = false;
   name = "";
   weekdays = [];
+  scheduleValue = null;
+  scheduleMode = null;
 }
