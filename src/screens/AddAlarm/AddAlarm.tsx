@@ -11,23 +11,38 @@ import Time from "../../components/Time";
 import ScheduleDialog from "../../components/ScheduleDialog";
 import Alarm from "../../models/Alarm";
 import Routes from "../../routes";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 interface Props {
-  navigation: {
-    navigate: any;
-  };
   reduxAddAlarm: (object) => void;
+}
+
+interface IRouteProps {
+  params: {
+    text: string;
+    weekdays: Array<string>;
+    time: number;
+    scheduleValue: number;
+    scheduleMode: string;
+  };
 }
 
 const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  const [text, setText] = useState("");
-  const [weekdays, setWeekdays] = useState([]);
-  const [time, setTime] = useState(new Date().getTime());
-  const [scheduleValue, setScheduleValue] = useState(0);
-  const [scheduleMode, setScheduleMode] = useState(null);
+  console.log("ABC", navigation, route);
+
+  const routeParams = route.params;
+
+  const take = (key, fallback) =>
+    typeof routeParams[key] !== undefined ? routeParams[key] : fallback;
+
+  const [text, setText] = useState(take("name", ""));
+  const [weekdays, setWeekdays] = useState(take("weekdays", []));
+  const [time, setTime] = useState(take("time", new Date().getTime()));
+  const [scheduleValue, setScheduleValue] = useState(take("scheduleValue", 0));
+  const [scheduleMode, setScheduleMode] = useState(take("scheduleMode", null));
 
   const onSave = () => {
     if (text === "") {

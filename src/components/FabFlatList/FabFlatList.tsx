@@ -1,20 +1,46 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-import { FabFlatListStyle } from "./FabFlatList.style";
 import { FAB } from "react-native-paper";
 import { View, Text, TouchableOpacity } from "react-native";
 
-import Alarm from "../Alarm";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { compose } from "redux";
 import { withSort } from "../../enhancers/WithSort";
 import { withBottomElement } from "../../enhancers/WithBottomElement";
 import { connect } from "react-redux";
-import { deleteAlarm } from "../../store/actions";
+import { deleteAlarm, toggleMuteAlarm } from "../../store/actions";
+import { IAlarm } from "../../typings/AlarmType";
+import { FabFlatListStyle } from "./FabFlatList.style";
+import Alarm from "../Alarm";
 import ListEmpty from "../ListEmpty";
+import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
+import R from "../../routes";
 
-class FabFlatList extends React.Component {
+interface IFabFlatListProps {
+  items: Array<IAlarm>;
+  onFabPress: () => any;
+  reduxDeleteAlarm: (number) => any;
+  reduxToggleMuteAlarm: (number) => any;
+  navigation: {
+    navigate: (string, object) => void;
+  };
+  fabLabel: string;
+  fabIcon: ReactNode;
+  disableFab: boolean;
+}
+
+interface IFabFlatListState {
+  showFab: boolean;
+  showConfirmation: boolean;
+  listView: any;
+}
+
+class FabFlatList extends React.Component<
+  IFabFlatListProps,
+  IFabFlatListState
+> {
   state = {
+    showConfirmation: false,
     showFab: true,
     listView: null,
   };
@@ -41,7 +67,7 @@ class FabFlatList extends React.Component {
     <View style={FabFlatListStyle.rowBack}>
       <TouchableOpacity
         style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
-        onPress={() => this.toggleMute()}
+        onPress={() => this.props.reduxToggleMuteAlarm(item.id)}
       >
         {item.isMuted && <Text style={FabFlatListStyle.backText}>Unmute</Text>}
         {!item.isMuted && <Text style={FabFlatListStyle.backText}>Mute</Text>}
@@ -52,7 +78,11 @@ class FabFlatList extends React.Component {
           FabFlatListStyle.backRightBtnLeft,
           FabFlatListStyle.backBtn,
         ]}
-        onPress={() => console.log("EDIT")}
+        onPress={() =>
+          this.props.navigation.navigate(R.ADD_ALARM, {
+            ...item,
+          })
+        }
       >
         <Text style={FabFlatListStyle.backText}>Edit</Text>
       </TouchableOpacity>
@@ -62,10 +92,20 @@ class FabFlatList extends React.Component {
           FabFlatListStyle.backRightBtnRight,
           FabFlatListStyle.backBtn,
         ]}
-        onPress={() => this.props.reduxDeleteAlarm(item.id)}
+        onPress={() => this.setState({ showConfirmation: true })}
       >
         <Text style={FabFlatListStyle.backText}>Delete</Text>
       </TouchableOpacity>
+      <ConfirmDialog
+        title="Confirmation"
+        text="Are you sure to delete this alarm?"
+        isVisible={this.state.showConfirmation}
+        onAccept={() => {
+          this.setState({ showConfirmation: false });
+          this.props.reduxDeleteAlarm(item.id);
+        }}
+        onCancel={() => this.setState({ showConfirmation: false })}
+      />
     </View>
   );
 
@@ -88,26 +128,29 @@ class FabFlatList extends React.Component {
   };
 
   render() {
-    const { items, onFabPress, fabLabel, fabIcon } = this.props;
+    const { items, onFabPress, fabLabel, fabIcon, disableFab } = this.props;
     console.log("list", items);
 
     return (
       <View style={FabFlatListStyle.container}>
-        <SwipeListView
-          data={items}
-          onViewableItemsChanged={this.lastItemVisible}
-          renderItem={this.renderItem}
-          renderHiddenItem={this.renderHiddenItem}
-          leftOpenValue={90}
-          stopLeftSwipe={100}
-          rightOpenValue={-170}
-          stopRightSwipe={-180}
-          previewRowKey={"0"}
-          previewOpenValue={-40}
-          previewOpenDelay={3000}
-          onRowDidOpen={this.onRowDidOpen}
-        />
-        {this.state.showFab && (
+        {items.length > 0 && (
+          <SwipeListView
+            data={items}
+            onViewableItemsChanged={this.lastItemVisible}
+            renderItem={this.renderItem}
+            renderHiddenItem={this.renderHiddenItem}
+            leftOpenValue={90}
+            stopLeftSwipe={100}
+            rightOpenValue={-170}
+            stopRightSwipe={-180}
+            previewRowKey={"0"}
+            previewOpenValue={-40}
+            previewOpenDelay={3000}
+            onRowDidOpen={this.onRowDidOpen}
+          />
+        )}
+        {items.length === 0 && <ListEmpty />}
+        {!disableFab && this.state.showFab && (
           <FAB
             style={FabFlatListStyle.fab}
             icon={fabIcon}
@@ -122,12 +165,13 @@ class FabFlatList extends React.Component {
 
 const mapDispatchToProps = {
   reduxDeleteAlarm: deleteAlarm,
+  reduxToggleMuteAlarm: toggleMuteAlarm,
 };
 
 const enhance = compose(
+  connect(null, mapDispatchToProps),
   withSort,
-  withBottomElement,
-  connect(null, mapDispatchToProps)
+  withBottomElement
 );
 
 export default enhance(FabFlatList);

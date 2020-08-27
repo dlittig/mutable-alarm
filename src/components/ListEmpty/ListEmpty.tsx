@@ -1,11 +1,14 @@
-import React from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native-paper'
+import React from "react";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
+import { ListEmptyStyle } from "./ListEmpty.style";
 
 const ListEmpty = () => (
-  <View>
-    <Text>It's empty here. You can add an item via the Add button below :)</Text>
+  <View style={ListEmptyStyle.container}>
+    <Text style={ListEmptyStyle.text}>
+      It's empty here. You can add an item via the Add button below :)
+    </Text>
   </View>
-)
+);
 
-export default ListEmpty
+export default ListEmpty;

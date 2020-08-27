@@ -1,21 +1,22 @@
 import { DefaultTheme } from "react-native-paper";
-import { Appearance } from "react-native-appearance";
 
-console.log(Appearance.getColorScheme);
+const get = (scheme) => {
+  const values =
+    scheme === "dark"
+      ? require("./colors/values").dark
+      : require("./colors/values").light;
 
-const values =
-  Appearance.getColorScheme() === "dark"
-    ? require("./colors/values").dark
-    : require("./colors/values").light;
+  const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: values.primary,
+      accent: values.accent,
+    },
+  };
 
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: values.primary,
-    accent: values.accent,
-  },
+  return theme;
 };
 
-export default theme;
+export default get;

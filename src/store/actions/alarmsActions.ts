@@ -10,8 +10,8 @@ export const updateAlarm = (alarm) => ({
   payload: alarm,
 });
 
-export const muteAlarm = (alarmId) => ({
-  type: AlarmsConstants.MUTE_ALARM,
+export const toggleMuteAlarm = (alarmId) => ({
+  type: AlarmsConstants.TOGGLE_MUTE_ALARM,
   payload: alarmId,
 });
 

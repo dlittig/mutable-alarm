@@ -1,7 +1,7 @@
-import { addAlarm, deleteAlarm, muteAlarm, updateAlarm } from './alarmsActions'
+import { addAlarm, deleteAlarm, toggleMuteAlarm, updateAlarm } from './alarmsActions'
 export {
   addAlarm,
   deleteAlarm,
-  muteAlarm,
+  toggleMuteAlarm,
   updateAlarm
 }

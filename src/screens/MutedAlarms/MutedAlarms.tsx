@@ -1,32 +1,24 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
-import Alarm from "../../components/Alarm";
-import ListEmpty from "../../components/ListEmpty";
-import { MoreButton } from "../../components/Navigation/Actions";
+import FabFlatList from "../../components/FabFlatList";
 
-const MutedAlarms = ({ alarms }) => (
-  <FlatList
-    data={Object.values(alarms)}
-    bounces={true}
-    renderItem={({ item }) => (
-      <Alarm
-        id={item.id}
-        time={item.time}
-        isEnabled={item.isEnabled}
-        isMuted={true}
-      />
-    )}
-    keyExtractor={item => item.id}
-    ListEmptyComponent={<ListEmpty />}
-  />
-);
+const MutedAlarms = ({ alarms }) => {
+  const navigation = useNavigation();
+  const items = Object.values(alarms).filter((alarm) => alarm.isMuted);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FabFlatList navigation={navigation} items={items} disableFab={true} />
+    </View>
+  );
+};
 
 MutedAlarms.navigationOptions = {
   title: "Muted alarms",
   headerTitle: "Alarms",
-  headerRight: () => <MoreButton tintColor="#333" />
 };
 
 const mapStateToProps = ({ alarmsReducer: { alarms } }) => ({ alarms });

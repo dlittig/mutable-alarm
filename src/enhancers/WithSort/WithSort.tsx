@@ -14,7 +14,6 @@ export const withSort = (Component) => {
 
     render() {
       const { items, ...remainingProps } = this.props;
-      console.log("sort", items);
       const sort = "time";
       const order = "ASC";
 

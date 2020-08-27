@@ -24,6 +24,7 @@ const Alarm: FC<IAlarm> = ({
 }) => {
   const [muted, setMuted] = useState(isMuted);
   const toggleSwitch = () => setMuted(!muted);
+  const isDayActive = (day) => weekdays.includes(day);
 
   return (
     <TouchableWithoutFeedback>
@@ -31,6 +32,66 @@ const Alarm: FC<IAlarm> = ({
         <Text style={AlarmStyle.text}>{getCurrentTime(time)}</Text>
         <View>
           <Text>{name}</Text>
+          {weekdays && (
+            <View style={AlarmStyle.weekdays}>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("mo") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                M
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("tue") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                T
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("wed") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                W
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("thu") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                T
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("fri") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                F
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("sat") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                S
+              </Text>
+              <Text
+                style={[
+                  AlarmStyle.weekday,
+                  isDayActive("sun") ? AlarmStyle.weekdayActive : null,
+                ]}
+              >
+                S
+              </Text>
+            </View>
+          )}
           {muted && <MaterialCommunityIcons name="restore" size={25} />}
         </View>
       </View>
