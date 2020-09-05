@@ -92,7 +92,10 @@ class FabFlatList extends React.Component<
           FabFlatListStyle.backRightBtnRight,
           FabFlatListStyle.backBtn,
         ]}
-        onPress={() => this.setState({ showConfirmation: true })}
+        onPress={() => {
+          console.log("this", this);
+          this.setState({ showConfirmation: true });
+        }}
       >
         <Text style={FabFlatListStyle.backText}>Delete</Text>
       </TouchableOpacity>
