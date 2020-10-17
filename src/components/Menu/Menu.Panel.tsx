@@ -1,16 +1,24 @@
 import React from "react";
-import { connect } from "react-redux";
-import { SwipeablePanel } from "rn-swipeable-panel";
 import { View } from "react-native";
 import { List } from "react-native-paper";
+import { connect } from "react-redux";
+import { SwipeablePanel } from "rn-swipeable-panel";
+
+import R from "../../routes";
+import Navigator from "../../services/NavigatorService";
 import { closePanel } from "../../store/actions/panelActions";
 
-const Panel = ({ panelIsOpen, reduxClosePanel }) => {
+const Panel = ({ panelIsOpen, reduxClosePanel, navigation }) => {
   const panelProps = {
     fullWidth: true,
     showCloseButton: true,
     onClose: () => reduxClosePanel(),
     onPressCloseButton: () => reduxClosePanel(),
+  };
+
+  const navigate = (routeName) => {
+    reduxClosePanel();
+    setTimeout(() => Navigator.navigate(routeName), 200);
   };
 
   return (
@@ -20,19 +28,19 @@ const Panel = ({ panelIsOpen, reduxClosePanel }) => {
           title="Donate"
           description="Buy me a coffee"
           left={(props) => <List.Icon {...props} icon="gift" />}
-          onPress={() => {}}
+          onPress={() => navigate(R.DONATE)}
         />
         <List.Item
           title="Settings"
           description="Configure app behaviour"
           left={(props) => <List.Icon {...props} icon="cogs" />}
-          onPress={() => {}}
+          onPress={() => navigate(R.SETTINGS)}
         />
         <List.Item
           title="About"
           description="License and more info"
           left={(props) => <List.Icon {...props} icon="information" />}
-          onPress={() => {}}
+          onPress={() => navigate(R.ABOUT)}
         />
       </View>
     </SwipeablePanel>

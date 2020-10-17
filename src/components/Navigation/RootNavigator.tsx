@@ -1,9 +1,12 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import R from "../../routes";
 import AddAlarmNavigator from "./Stacks/AddAlarmNavigator";
 import BottomTabNavigator from "./Stacks/BottomTabNavigator";
 import Menu from "../Menu";
+import Settings from "../../screens/Settings";
+import About from "../../screens/About";
+import Donate from "../../screens/Donate";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,9 @@ const RootNavigator = () => (
       options={options}
       component={AddAlarmNavigator}
     />
+    <Stack.Screen name={R.SETTINGS} component={Settings} />
+    <Stack.Screen name={R.ABOUT} component={About} />
+    <Stack.Screen name={R.DONATE} component={Donate} />
   </Stack.Navigator>
 );
 

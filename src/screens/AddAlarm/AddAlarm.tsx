@@ -1,17 +1,17 @@
 import React, { FC, useState } from "react";
-import { View, ToastAndroid } from "react-native";
-import uuid from "react-native-uuid";
-import { TextInput, FAB, Caption } from "react-native-paper";
-import { connect } from "react-redux";
 import { compose } from "redux";
-import { addAlarm as addAlarmAction } from "../../store/actions";
-
-import { AddAlarmStyle } from "./AddAlarm.style";
-import Time from "../../components/Time";
-import ScheduleDialog from "../../components/ScheduleDialog";
-import Alarm from "../../models/Alarm";
-import Routes from "../../routes";
+import uuid from "react-native-uuid";
+import { connect } from "react-redux";
+import { View, ToastAndroid } from "react-native";
+import { TextInput, FAB, Caption } from "react-native-paper";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+import Routes from "../../routes";
+import Alarm from "../../models/Alarm";
+import Time from "../../components/Time";
+import { AddAlarmStyle } from "./AddAlarm.style";
+import ScheduleDialog from "../../components/ScheduleDialog";
+import { addAlarm as addAlarmAction } from "../../store/actions";
 
 interface Props {
   reduxAddAlarm: (object) => void;
@@ -36,7 +36,9 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   const routeParams = route.params;
 
   const take = (key, fallback) =>
-    typeof routeParams[key] !== undefined ? routeParams[key] : fallback;
+    typeof routeParams !== "undefined" && typeof routeParams[key] !== undefined
+      ? routeParams[key]
+      : fallback;
 
   const [text, setText] = useState(take("name", ""));
   const [weekdays, setWeekdays] = useState(take("weekdays", []));
