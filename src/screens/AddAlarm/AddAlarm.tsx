@@ -31,8 +31,6 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  console.log("ABC", navigation, route);
-
   const routeParams = route.params;
 
   const take = (key, fallback) =>

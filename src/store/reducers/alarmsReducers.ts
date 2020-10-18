@@ -16,7 +16,6 @@ export const alarmsReducer = produce((state = initialState, action) => {
     case AlarmsConstants.TOGGLE_MUTE_ALARM: {
       let alarmId = action.payload;
       state.alarms[alarmId].isMuted = !state.alarms[alarmId].isMuted;
-      console.log("state", state.alarms);
       break;
     }
     case AlarmsConstants.UPDATE_ALARM: {

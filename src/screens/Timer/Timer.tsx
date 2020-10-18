@@ -1,11 +1,12 @@
-import React from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native-paper'
+import React from "react";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
+import Counter from "../../components/Counter/Counter";
 
 const Timer = () => (
-    <View>
-        <Text>Set the timer here...</Text>
-    </View>
-)
+  <View>
+    <Counter direction="down" timePreset={86400} />
+  </View>
+);
 
-export default Timer
+export default Timer;

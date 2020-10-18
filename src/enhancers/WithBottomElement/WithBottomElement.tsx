@@ -16,7 +16,6 @@ export const withBottomElement = (Component) => {
 
     render() {
       const { items, ...remainingProps } = this.props;
-      console.log("element", items);
 
       return (
         <React.Fragment>

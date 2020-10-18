@@ -1,11 +1,19 @@
-import React from 'react'
-import { View } from 'react-native'
-import { Text } from 'react-native-paper'
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Button, Text } from "react-native-paper";
+import Counter from "../../components/Counter/Counter";
 
-const Stopwatch = () => (
-    <View>
-        <Text>Start the stop watch!</Text>
+import { StopWatchStyle } from "./Stopwatch.style";
+
+const Stopwatch = () => {
+  return (
+    <View style={StopWatchStyle.container}>
+      <Counter
+        direction="up"
+        timePreset={0}
+      />
     </View>
-)
+  );
+};
 
-export default Stopwatch
+export default Stopwatch;

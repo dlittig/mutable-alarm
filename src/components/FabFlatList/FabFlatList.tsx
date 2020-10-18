@@ -93,7 +93,6 @@ class FabFlatList extends React.Component<
           FabFlatListStyle.backBtn,
         ]}
         onPress={() => {
-          console.log("this", this);
           this.setState({ showConfirmation: true });
         }}
       >
@@ -132,7 +131,6 @@ class FabFlatList extends React.Component<
 
   render() {
     const { items, onFabPress, fabLabel, fabIcon, disableFab } = this.props;
-    console.log("list", items);
 
     return (
       <View style={FabFlatListStyle.container}>

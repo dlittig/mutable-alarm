@@ -19,7 +19,6 @@ const TOGGLE_WEEKDAY = "[weekday] toggle";
 function reducer(state, action) {
   switch (action.type) {
     case TOGGLE_WEEKDAY:
-      console.log(action, state);
       if (!state.daysSelected.includes(action.day)) {
         // add
         return { daysSelected: [...state.daysSelected, action.day] };
