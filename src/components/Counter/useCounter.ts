@@ -17,7 +17,6 @@ export const useCounter = (initialValue, direction) => {
     setPaused(false);
     intervalRef.current = window.setInterval(() => {
       setCounter((counter) => counter + delta);
-      console.log(`counter: ${counter}`);
     }, 50);
   };
 

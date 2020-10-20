@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const StopWatchStyle = StyleSheet.create({
+const TimerStyle = StyleSheet.create({
   container: {
     flex: 1,
     flexGrow: 1,
@@ -18,4 +18,4 @@ const StopWatchStyle = StyleSheet.create({
   },
 });
 
-export { StopWatchStyle };
+export { TimerStyle };

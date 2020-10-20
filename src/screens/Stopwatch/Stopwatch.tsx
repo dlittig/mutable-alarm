@@ -8,10 +8,7 @@ import { StopWatchStyle } from "./Stopwatch.style";
 const Stopwatch = () => {
   return (
     <View style={StopWatchStyle.container}>
-      <Counter
-        direction="up"
-        timePreset={0}
-      />
+      <Counter showLap={true} direction="up" timePreset={0} />
     </View>
   );
 };
