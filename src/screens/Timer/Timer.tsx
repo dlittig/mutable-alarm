@@ -1,14 +1,12 @@
 import React from "react";
-import { View } from "react-native";
 
+import BaseView from "../../components/BaseView";
 import Counter from "../../components/Counter";
 
-import { TimerStyle } from "./Timer.style";
-
 const Timer = () => (
-  <View style={TimerStyle.container}>
+  <BaseView center={false} color="main" margin="medium" bottomSpacer={true}>
     <Counter showLap={false} direction="down" timePreset={86400} />
-  </View>
+  </BaseView>
 );
 
 export default Timer;

@@ -1,18 +1,18 @@
 import React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import FabFlatList from "../../components/FabFlatList";
+import BaseView from "../../components/BaseView";
 
 const MutedAlarms = ({ alarms }) => {
   const navigation = useNavigation();
   const items = Object.values(alarms).filter((alarm) => alarm.isMuted);
 
   return (
-    <View style={{ flex: 1 }}>
+    <BaseView center={false} color="background" margin="none">
       <FabFlatList navigation={navigation} items={items} disableFab={true} />
-    </View>
+    </BaseView>
   );
 };
 

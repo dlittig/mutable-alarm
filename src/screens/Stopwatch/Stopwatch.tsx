@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { View } from "react-native";
-import { Button, Text } from "react-native-paper";
-import Counter from "../../components/Counter/Counter";
+import React from "react";
 
-import { StopWatchStyle } from "./Stopwatch.style";
+import BaseView from "../../components/BaseView";
+import Counter from "../../components/Counter/Counter";
 
 const Stopwatch = () => {
   return (
-    <View style={StopWatchStyle.container}>
+    <BaseView center={false} color="main" margin="medium" bottomSpacer={true}>
       <Counter showLap={true} direction="up" timePreset={0} />
-    </View>
+    </BaseView>
   );
 };
 

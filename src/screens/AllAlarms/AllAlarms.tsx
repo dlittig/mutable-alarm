@@ -1,5 +1,6 @@
 import React from "react";
 
+import BaseView from "../../components/BaseView";
 import FabFlatList from "../../components/FabFlatList";
 import Routes from "../../routes";
 import { useNavigation } from "@react-navigation/native";
@@ -13,7 +14,7 @@ const AllAlarms = ({ alarms }) => {
   const items = Object.values(alarms).filter((alarm) => !alarm.isMuted);
 
   return (
-    <View style={{ flex: 1 }}>
+    <BaseView center={false} color="background" margin="none">
       <FabFlatList
         navigation={navigation}
         items={items}
@@ -21,7 +22,7 @@ const AllAlarms = ({ alarms }) => {
         fabLabel="Add"
         onFabPress={() => navigation.navigate(Routes.ADD_ALARM)}
       />
-    </View>
+    </BaseView>
   );
 };
 

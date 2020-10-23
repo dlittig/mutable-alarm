@@ -12,6 +12,7 @@ import Time from "../../components/Time";
 import { AddAlarmStyle } from "./AddAlarm.style";
 import ScheduleDialog from "../../components/ScheduleDialog";
 import { addAlarm as addAlarmAction } from "../../store/actions";
+import BaseView from "../../components/BaseView";
 
 interface Props {
   reduxAddAlarm: (object) => void;
@@ -78,7 +79,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   };
 
   return (
-    <View style={AddAlarmStyle.container}>
+    <BaseView center={false} color="main" margin="medium">
       <Time time={new Date(time)} onChange={(time) => setTime(time)} />
 
       <TextInput
@@ -102,7 +103,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
         label="Save"
         onPress={onSave}
       />
-    </View>
+    </BaseView>
   );
 };
 
