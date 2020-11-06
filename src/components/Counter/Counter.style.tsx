@@ -14,20 +14,6 @@ const CounterStyle = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-  lap: {
-    margin: 5,
-    paddingHorizontal: 15,
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
-  },
   lapText: {
     padding: 10,
   },

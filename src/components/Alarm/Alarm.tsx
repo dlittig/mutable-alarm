@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { IAlarm } from "../../typings/AlarmType";
+import Card from "../Card";
 
 const nextAlarm = (time) => time;
 
@@ -28,7 +29,7 @@ const Alarm: FC<IAlarm> = ({
 
   return (
     <TouchableWithoutFeedback>
-      <View style={AlarmStyle.container} key={id}>
+      <Card alignment="spacedAlignment" fixedHight={80} key={id}>
         <Text style={AlarmStyle.text}>{getCurrentTime(time)}</Text>
         <View>
           <Text>{name}</Text>
@@ -94,7 +95,7 @@ const Alarm: FC<IAlarm> = ({
           )}
           {muted && <MaterialCommunityIcons name="restore" size={25} />}
         </View>
-      </View>
+      </Card>
     </TouchableWithoutFeedback>
   );
 };

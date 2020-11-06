@@ -23,16 +23,16 @@ const Counter: FC<ICounter> = ({ timePreset, direction, showLap }) => {
   const time = getTimeData(counter);
 
   const renderLapItem = ({ item, index }) => (
-    <View style={CounterStyle.lap}>
+    <Card light={true} alignment={"noneAlignment"}>
       <Text style={[CounterStyle.bigger, CounterStyle.lapText]}>
         {laps.length - index}: {getTime(item.value)}
       </Text>
-    </View>
+    </Card>
   );
 
   return (
     <View style={CounterStyle.container}>
-      <Card>
+      <Card alignment="centerAlignment" fixedHight={80}>
         <Text style={CounterStyle.text}>{time.hours}</Text>
         <Text style={CounterStyle.text}>:</Text>
         <Text style={CounterStyle.text}>{time.minutes}</Text>
