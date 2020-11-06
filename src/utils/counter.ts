@@ -30,6 +30,14 @@ export const getTime = (value) =>
     value
   )}.${getMilliSeconds(value)}`;
 
+export const timeDataToCounter = ({ hours, minutes, seconds }) => {
+  return (
+    hours * (MS_RANGE * 60 * 60) +
+    minutes * (MS_RANGE * 60) +
+    seconds * MS_RANGE
+  );
+};
+
 export const getTimeData = (value) => ({
   hours: getHours(value),
   minutes: getMinutes(value),

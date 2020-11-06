@@ -13,7 +13,7 @@ import { IAlarm } from "../../typings/AlarmType";
 import { FabFlatListStyle } from "./FabFlatList.style";
 import Alarm from "../Alarm";
 import ListEmpty from "../ListEmpty";
-import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
+import ConfirmDialog from "../Dialogs/ConfirmDialog";
 import R from "../../routes";
 
 interface IFabFlatListProps {

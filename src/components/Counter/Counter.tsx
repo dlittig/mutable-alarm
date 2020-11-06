@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Text, Button } from "react-native-paper";
 import { getTime, getTimeData } from "../../utils/counter";
@@ -6,6 +6,8 @@ import { useCounter } from "./useCounter";
 
 import { CounterStyle } from "./Counter.style";
 import Card from "../Card";
+import { TouchableHighlight } from "react-native-gesture-handler";
+import SetTimerDialog from "../Dialogs/SetTimerDialog";
 
 type ICounter = {
   timePreset: number;
@@ -14,13 +16,19 @@ type ICounter = {
 };
 
 const Counter: FC<ICounter> = ({ timePreset, direction, showLap }) => {
-  const { isActive, isPaused, counter, onStart, onStop, onReset } = useCounter(
-    timePreset,
-    direction
-  );
+  const {
+    isActive,
+    isPaused,
+    counter,
+    onStart,
+    onStop,
+    onReset,
+    updateCounter,
+  } = useCounter(timePreset, direction);
 
   const [laps, setLaps] = useState([]);
-  const time = getTimeData(counter);
+  const [isTimerDialogVisible, setTimerDialogVisible] = useState(false);
+  let time = getTimeData(counter);
 
   const renderLapItem = ({ item, index }) => (
     <Card light={true} alignment={"noneAlignment"}>
@@ -32,7 +40,28 @@ const Counter: FC<ICounter> = ({ timePreset, direction, showLap }) => {
 
   return (
     <View style={CounterStyle.container}>
-      <Card alignment="centerAlignment" fixedHight={80}>
+      {direction === "down" && (
+        <SetTimerDialog
+          onAccept={(newCounter) => {
+            onStop();
+            setTimerDialogVisible(false);
+            updateCounter(newCounter);
+          }}
+          onCancel={() => setTimerDialogVisible(false)}
+          isVisible={isTimerDialogVisible}
+          initialValues={{
+            hours: time.hours,
+            minutes: time.minutes,
+            seconds: time.seconds,
+          }}
+        />
+      )}
+      <Card
+        alignment="centerAlignment"
+        fixedHight={80}
+        touchable={direction === "down" ? true : false}
+        onTouch={() => setTimerDialogVisible(true)}
+      >
         <Text style={CounterStyle.text}>{time.hours}</Text>
         <Text style={CounterStyle.text}>:</Text>
         <Text style={CounterStyle.text}>{time.minutes}</Text>

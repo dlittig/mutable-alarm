@@ -32,6 +32,12 @@ export const useCounter = (initialValue, direction) => {
     setCounter(initialValue);
   };
 
+  const updateCounter = (value) => {
+    setActive(false);
+    setPaused(false);
+    setCounter(value)
+  }
+
   return {
     isActive,
     isPaused,
@@ -39,5 +45,6 @@ export const useCounter = (initialValue, direction) => {
     onStop,
     onReset,
     counter,
+    updateCounter
   };
 };

@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { View } from "react-native";
+import { TouchableHighlight, View } from "react-native";
 import { CardStyle } from "./Card.Style";
 
 interface ICard {
@@ -7,26 +7,48 @@ interface ICard {
   alignment?: "centerAlignment" | "spacedAlignment" | "noneAlignment";
   fixedHight?: number;
   light?: boolean;
+  touchable?: boolean;
+  onTouch?: () => void;
 }
+
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
+  condition ? wrapper(children) : children;
 
 const Card: FC<ICard> = ({
   children,
   alignment = "none",
   fixedHight = 0,
   light = false,
+  touchable = false,
+  onTouch,
 }) => (
-  <View
-    style={[
-      CardStyle.container,
-      CardStyle[alignment],
-      fixedHight > 0 && {
-        height: fixedHight,
-      },
-      light ? CardStyle.light : CardStyle.dark,
-    ]}
+  <ConditionalWrapper
+    condition={touchable}
+    wrapper={(children) => (
+      <TouchableHighlight
+        onPressOut={onTouch}
+        delayPressIn={0}
+        activeOpacity={1}
+        underlayColor="#eee"
+        style={CardStyle.touchableFeedback}
+      >
+        {children}
+      </TouchableHighlight>
+    )}
   >
-    {children}
-  </View>
+    <View
+      style={[
+        CardStyle.container,
+        CardStyle[alignment],
+        fixedHight > 0 && {
+          height: fixedHight,
+        },
+        light ? CardStyle.light : CardStyle.dark,
+      ]}
+    >
+      {children}
+    </View>
+  </ConditionalWrapper>
 );
 
 export default Card;

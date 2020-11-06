@@ -10,7 +10,7 @@ import Routes from "../../routes";
 import Alarm from "../../models/Alarm";
 import Time from "../../components/Time";
 import { AddAlarmStyle } from "./AddAlarm.style";
-import ScheduleDialog from "../../components/ScheduleDialog";
+import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
 import { addAlarm as addAlarmAction } from "../../store/actions";
 import BaseView from "../../components/BaseView";
 

@@ -13,6 +13,9 @@ const CardStyle = StyleSheet.create({
     },
     shadowOpacity: 0.2,
   },
+  touchableFeedback: {
+    borderRadius: 10
+  },
   text: {
     fontSize: 30,
   },
