@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ICounterHook = {
   initialValue: number;
@@ -6,11 +6,13 @@ type ICounterHook = {
 };
 
 export const useCounter = (initialValue, direction) => {
-  const [isActive, setActive] = useState(false);
-  const [isPaused, setPaused] = useState(false);
+  const [isActive, setActive] = useState<boolean>(false);
+  const [isPaused, setPaused] = useState<boolean>(false);
   const intervalRef = useRef(null);
-  const [counter, setCounter] = useState(initialValue);
+  const [counter, setCounter] = useState<number | null>(initialValue);
   const delta = direction === "up" ? 1 : -1;
+
+  console.log("I render")
 
   const onStart = () => {
     setActive(true);
@@ -18,6 +20,7 @@ export const useCounter = (initialValue, direction) => {
     intervalRef.current = window.setInterval(() => {
       setCounter((counter) => counter + delta);
     }, 50);
+    console.log("J Set date")
   };
 
   const onStop = () => {
@@ -35,8 +38,17 @@ export const useCounter = (initialValue, direction) => {
   const updateCounter = (value) => {
     setActive(false);
     setPaused(false);
-    setCounter(value)
-  }
+    setCounter(value);
+  };
+
+  // useEffect(() => {
+  //   console.log("isActive changed:", isActive)
+  //   if (isActive && timeStarted === null) {
+  //     setTimeStarted(new Date());
+  //   } else {
+  //     setTimeStarted(null);
+  //   }
+  // }, [isActive]);
 
   return {
     isActive,
@@ -45,6 +57,6 @@ export const useCounter = (initialValue, direction) => {
     onStop,
     onReset,
     counter,
-    updateCounter
+    updateCounter,
   };
 };

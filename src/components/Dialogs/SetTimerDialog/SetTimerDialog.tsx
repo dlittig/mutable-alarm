@@ -27,8 +27,6 @@ const SetTimerDialog: FC<ISetTimerDialog> = ({
   const [minutes, setMinutes] = useState(initialValues.minutes);
   const [seconds, setSeconds] = useState(initialValues.seconds);
 
-  const pad = (val) => (val < 10 ? `0${val}` : `${val}`);
-
   const Selector = ({ min, max, value, callback }) => (
     <InputSpinner
       max={max}

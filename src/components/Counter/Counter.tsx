@@ -8,6 +8,7 @@ import { CounterStyle } from "./Counter.style";
 import Card from "../Card";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import SetTimerDialog from "../Dialogs/SetTimerDialog";
+import Estimation from "../Estimation";
 
 type ICounter = {
   timePreset: number;
@@ -27,8 +28,11 @@ const Counter: FC<ICounter> = ({ timePreset, direction, showLap }) => {
   } = useCounter(timePreset, direction);
 
   const [laps, setLaps] = useState([]);
+  const [timerStarted, setTimerStarted] = useState(null);
   const [isTimerDialogVisible, setTimerDialogVisible] = useState(false);
   let time = getTimeData(counter);
+
+  console.log("Z rerender")
 
   const renderLapItem = ({ item, index }) => (
     <Card light={true} alignment={"noneAlignment"}>
@@ -83,6 +87,9 @@ const Counter: FC<ICounter> = ({ timePreset, direction, showLap }) => {
           keyExtractor={(lap) => lap.id}
           renderItem={(item) => renderLapItem(item)}
         ></FlatList>
+      )}
+      {direction === "down" && isActive && (
+        <Estimation value={timePreset} start={new Date()} />
       )}
       <View style={CounterStyle.actions}>
         <Button

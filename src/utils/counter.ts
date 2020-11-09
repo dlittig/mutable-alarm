@@ -1,28 +1,29 @@
 const MS_RANGE = 20; // 50ms interval * 20 = 1000ms = 1s
 
-const fill = (value) => {
+export const fill = (value) => {
   if (value < 10) {
     return `0${value}`;
   } else return value;
 };
 
-export const getMinutes = (value) => {
+export const getMinutes = (value, raw = false) => {
   const totalMinutes = Math.floor(value / (MS_RANGE * 60));
-  return fill(totalMinutes % 60);
+  return raw ? totalMinutes % 60 : fill(totalMinutes % 60);
 };
 
-export const getMilliSeconds = (value) => {
-  return fill((value % MS_RANGE) * 5); // Stretch from 20 to 100
+export const getMilliSeconds = (value, raw = false) => {
+  const totalMilliseconds = (value % MS_RANGE) * 5
+  return raw ? totalMilliseconds : fill(totalMilliseconds); // Stretch from 20 to 100
 };
 
-export const getSeconds = (value) => {
+export const getSeconds = (value, raw = false) => {
   const totalSeconds = Math.floor(value / MS_RANGE);
-  return fill(totalSeconds % 60);
+  return raw ? totalSeconds % 60 : fill(totalSeconds % 60);
 };
 
-export const getHours = (value) => {
+export const getHours = (value, raw = false) => {
   const totalHours = Math.floor(value / (MS_RANGE * 60 * 60));
-  return fill(totalHours);
+  return raw ? totalHours : fill(totalHours);
 };
 
 export const getTime = (value) =>
@@ -38,9 +39,9 @@ export const timeDataToCounter = ({ hours, minutes, seconds }) => {
   );
 };
 
-export const getTimeData = (value) => ({
-  hours: getHours(value),
-  minutes: getMinutes(value),
-  seconds: getSeconds(value),
-  milliseconds: getMilliSeconds(value),
+export const getTimeData = (value, raw = false) => ({
+  hours: getHours(value, raw),
+  minutes: getMinutes(value, raw),
+  seconds: getSeconds(value, raw),
+  milliseconds: getMilliSeconds(value, raw),
 });
