@@ -20,7 +20,6 @@ const CounterStyle = StyleSheet.create({
   container: {
     marginTop: 20,
     width: "100%",
-    height: "100%",
     justifyContent: "space-between",
   },
   actions: {

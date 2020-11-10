@@ -6,38 +6,36 @@ type ICounterHook = {
 };
 
 export const useCounter = (initialValue, direction) => {
-  const [isActive, setActive] = useState<boolean>(false);
-  const [isPaused, setPaused] = useState<boolean>(false);
+  // const [isActive, setActive] = useState<boolean>(false);
+  // const [isPaused, setPaused] = useState<boolean>(false);
   const intervalRef = useRef(null);
   const [counter, setCounter] = useState<number | null>(initialValue);
   const delta = direction === "up" ? 1 : -1;
 
-  console.log("I render")
-
   const onStart = () => {
-    setActive(true);
-    setPaused(false);
+    // setActive(true);
+    // setPaused(false);
     intervalRef.current = window.setInterval(() => {
       setCounter((counter) => counter + delta);
     }, 50);
-    console.log("J Set date")
+    // console.log("J Set date")
   };
 
   const onStop = () => {
-    setPaused(true);
-    setActive(false);
+    // setPaused(true);
+    // setActive(false);
     clearInterval(intervalRef.current);
   };
 
   const onReset = () => {
-    setActive(false);
-    setPaused(false);
+    // setActive(false);
+    // setPaused(false);
     setCounter(initialValue);
   };
 
   const updateCounter = (value) => {
-    setActive(false);
-    setPaused(false);
+    // setActive(false);
+    // setPaused(false);
     setCounter(value);
   };
 
@@ -51,8 +49,8 @@ export const useCounter = (initialValue, direction) => {
   // }, [isActive]);
 
   return {
-    isActive,
-    isPaused,
+    // isActive,
+    // isPaused,
     onStart,
     onStop,
     onReset,

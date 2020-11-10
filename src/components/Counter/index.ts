@@ -1,2 +1,7 @@
-import Counter from "./Counter";
-export default Counter;
+import CounterUp from "./CounterUp";
+import CounterDown from "./CounterDown";
+
+export default {
+  Up: CounterUp,
+  Down: CounterDown,
+};
