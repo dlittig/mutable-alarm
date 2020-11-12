@@ -26,13 +26,10 @@ const CounterDown: FC<ICounter> = ({
   isPaused,
   reduxChangeCounter,
 }) => {
-  const {
-    counter,
-    onStart,
-    onStop,
-    onReset,
-    updateCounter,
-  } = useCounter(timePreset, "down");
+  const { counter, onStart, onStop, onReset, updateCounter } = useCounter(
+    timePreset,
+    "down"
+  );
 
   useEffect(() => {
     if (isActive === true) {
@@ -50,6 +47,7 @@ const CounterDown: FC<ICounter> = ({
 
   const [isTimerDialogVisible, setTimerDialogVisible] = useState(false);
   let time = getTimeData(counter);
+  let rawTime = getTimeData(counter, true);
 
   return (
     <View style={CounterStyle.container}>
@@ -62,9 +60,9 @@ const CounterDown: FC<ICounter> = ({
         onCancel={() => setTimerDialogVisible(false)}
         isVisible={isTimerDialogVisible}
         initialValues={{
-          hours: time.hours,
-          minutes: time.minutes,
-          seconds: time.seconds,
+          hours: rawTime.hours,
+          minutes: rawTime.minutes,
+          seconds: rawTime.seconds,
         }}
       />
       <Card
