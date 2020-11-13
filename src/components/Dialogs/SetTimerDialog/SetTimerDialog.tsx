@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { View } from "react-native";
-import InputSpinner from "react-native-input-spinner";
-import { Dialog, Button, Portal, Paragraph, Text } from "react-native-paper";
+import { Dialog, Button, Portal, Text } from "react-native-paper";
 import { timeDataToCounter } from "../../../utils/counter";
 import NumberSelector from "../../NumberSelector";
 
