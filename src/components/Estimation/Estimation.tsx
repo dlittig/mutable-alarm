@@ -10,9 +10,7 @@ interface IEstimation {
 const Estimation: FC<IEstimation> = ({ value, start }) => {
   const timeData = getTimeData(value, true);
 
-  console.log("G", start.toTimeString())
-
-  start.setHours(start.getHours() + timeData.hours + 1);
+  start.setHours(start.getHours() + timeData.hours);
   start.setMinutes(start.getMinutes() + timeData.minutes);
   start.setSeconds(start.getSeconds() + timeData.seconds);
 

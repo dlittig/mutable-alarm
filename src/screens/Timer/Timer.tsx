@@ -17,7 +17,8 @@ import { getTime } from "../../utils/counter";
 interface ITimer {
   isPaused: boolean;
   isActive: boolean;
-  counter: number;
+  activated: Date;
+  initialValue: number;
   reduxStartCounter: (string) => void;
   reduxPauseCounter: (string) => void;
   reduxResetCounter: (string) => void;
@@ -26,7 +27,8 @@ interface ITimer {
 const Timer: FC<ITimer> = ({
   isPaused,
   isActive,
-  counter,
+  activated,
+  initialValue,
   reduxResetCounter,
   reduxStartCounter,
   reduxPauseCounter,
@@ -34,7 +36,7 @@ const Timer: FC<ITimer> = ({
   <BaseView center={false} color="main" margin="medium" bottomSpacer={true}>
     <Counter.Down />
 
-    {isActive && <Estimation value={counter} start={new Date()} />}
+    {isActive && <Estimation value={initialValue} start={activated} />}
 
     <Button
       mode="contained"
@@ -61,12 +63,13 @@ const Timer: FC<ITimer> = ({
 
 const mapStateToProps = ({
   counterReducer: {
-    down: { isActive, isPaused, counter },
+    down: { isActive, isPaused, activated, initialValue },
   },
 }) => ({
   isActive,
   isPaused,
-  counter,
+  activated,
+  initialValue,
 });
 
 const mapDispatchToProps = {
