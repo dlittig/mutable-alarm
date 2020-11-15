@@ -4,6 +4,7 @@
   "expo": {
     "name": "mutableAlarm",
     "slug": "expo-template-bare",
+    "userInterfaceStyle": "automatic",
     "privacy": "unlisted",
     "sdkVersion": "39.0.0",
     "version": "1.0.0",

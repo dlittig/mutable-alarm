@@ -1,38 +1,17 @@
 import React, { FC } from "react";
 import BaseView from "../../components/BaseView";
-import {
-  applyAutoTheme,
-  applyBlackTheme,
-  applyDarkTheme,
-  applyLightTheme,
-} from "../../store/actions/settingsAction";
+import { applyTheme } from "../../store/actions/settingsAction";
+import { THEMES } from "../../store/constants/settingsConstants";
 
 import { List } from "react-native-paper";
 import { connect } from "react-redux";
 
 interface ISettings {
   theme: string;
-  reduxApplyAutoTheme: () => void;
-  reduxApplyDarkTheme: () => void;
-  reduxApplyBlackTheme: () => void;
-  reduxApplyLightTheme: () => void;
+  reduxApplyTheme: (string) => void;
 }
 
-const leftIcon = (theme, targetTheme, props) => {
-  if (theme === targetTheme) {
-    return <List.Icon {...props} icon="check" />;
-  } else {
-    return <></>;
-  }
-};
-
-const Settings: FC<ISettings> = ({
-  theme,
-  reduxApplyAutoTheme,
-  reduxApplyDarkTheme,
-  reduxApplyBlackTheme,
-  reduxApplyLightTheme,
-}) => {
+const Settings: FC<ISettings> = ({ theme, reduxApplyTheme }) => {
   const leftProps = {
     light: undefined,
     black: undefined,
@@ -57,21 +36,21 @@ const Settings: FC<ISettings> = ({
           <List.Item
             title="Light"
             {...leftProps.light}
-            onPress={reduxApplyLightTheme}
+            onPress={() => reduxApplyTheme(THEMES.LIGHT)}
           />
 
           <List.Item
             title="Dark"
             {...leftProps.dark}
-            onPress={reduxApplyDarkTheme}
+            onPress={() => reduxApplyTheme(THEMES.DARK)}
           />
           <List.Item
             title="Black"
             {...leftProps.black}
-            onPress={reduxApplyBlackTheme}
+            onPress={() => reduxApplyTheme(THEMES.BLACK)}
           />
           <List.Item
-            onPress={reduxApplyAutoTheme}
+            onPress={() => reduxApplyTheme(THEMES.AUTO)}
             {...leftProps.auto}
             title="Automatic"
             description="The app will change its appearance based on your phone's settings"
@@ -85,10 +64,7 @@ const Settings: FC<ISettings> = ({
 const mapStateToProps = ({ settingsReducer: { theme } }) => ({ theme });
 
 const mapDispatchToProps = {
-  reduxApplyAutoTheme: applyAutoTheme,
-  reduxApplyDarkTheme: applyDarkTheme,
-  reduxApplyBlackTheme: applyBlackTheme,
-  reduxApplyLightTheme: applyLightTheme,
+  reduxApplyTheme: applyTheme,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -1,4 +1,8 @@
-export const SETTINGS_THEME_LIGHT = "[settings] theme light";
-export const SETTINGS_THEME_DARK = "[settings] theme dark";
-export const SETTINGS_THEME_BLACK = "[settings] theme black";
-export const SETTINGS_THEME_AUTO = "[settings] theme auto";
+export const SETTINGS_APPLY_THEME = "[settings] apply theme";
+
+export const THEMES = {
+  AUTO: "auto",
+  DARK: "dark",
+  LIGHT: "light",
+  BLACK: "black",
+};

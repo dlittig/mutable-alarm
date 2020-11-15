@@ -10,26 +10,33 @@ import getNavigationTheme from "./src/theme/navigation";
 import RootNavigator from "./src/components/Navigation/RootNavigator";
 import Menu from "./src/components/Menu/Menu";
 import Navigator from "./src/services/NavigatorService";
+import ThemeProvider from "./src/provider/ThemeProvider/ThemeProvider";
 
 const App = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <NavigationContainer
-      theme={getNavigationTheme(colorScheme)}
-      ref={(navigationRef) => {
-        Navigator.setNavigator(navigationRef);
-      }}
-    >
+    <Provider store={store}>
       <AppearanceProvider>
-        <PaperProvider theme={getPaperTheme(colorScheme)}>
-          <Provider store={store}>
-            <RootNavigator />
-            <Menu.Panel />
-          </Provider>
-        </PaperProvider>
+        <ThemeProvider>
+          <ThemeProvider.Consumer>
+            {theme => (
+              <NavigationContainer
+                theme={getNavigationTheme(theme)}
+                ref={(navigationRef) => {
+                  Navigator.setNavigator(navigationRef);
+                }}
+              >
+                <PaperProvider theme={getPaperTheme(theme)}>
+                  <RootNavigator />
+                  <Menu.Panel />
+                </PaperProvider>
+              </NavigationContainer>
+            )}
+          </ThemeProvider.Consumer>
+        </ThemeProvider>
       </AppearanceProvider>
-    </NavigationContainer>
+    </Provider>
   );
 };
 export default App;
