@@ -1,23 +1,44 @@
-import { DefaultTheme } from "@react-navigation/native";
+import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { THEMES } from "../store/constants/settingsConstants";
 
 const get = (scheme) => {
   const values =
-    scheme === "dark"
+    scheme === THEMES.DARK
       ? require("./colors/values").dark
       : require("./colors/values").light;
 
-  const theme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: values.primary,
-      background: "rgb(242, 242, 242)",
-      card: "rgb(255, 255, 255)",
-      text: "rgb(28, 28, 30)",
-      border: "rgb(199, 199, 204)",
-      notification: values.navigation,
-    },
-  };
+  let theme = {};
+
+  if (scheme === THEMES.DARK || scheme === THEMES.BLACK) {
+    theme = {
+      ...DarkTheme,
+      dark: scheme !== THEMES.LIGHT,
+      colors: {
+        ...DarkTheme.colors,
+        primary: values.primary,
+        background: values.background,
+        card: values.card,
+        notification: values.card,
+        text: values.text,
+        border: values.background,
+      },
+    };
+  } else {
+    theme = {
+      dark: scheme !== THEMES.LIGHT,
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        primary: values.primary,
+        background: values.background,
+        notification: values.card,
+        card: values.card,
+        text: values.text,
+        border: values.background,
+      },
+    };
+  }
+
   return theme;
 };
 

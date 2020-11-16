@@ -1,5 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { View } from "react-native";
+import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 
 import { BaseViewStyle } from "./BaseView.style";
 
@@ -18,19 +19,23 @@ const BaseView: FC<IBaseView> = ({
   color,
   bottomSpacer = false,
 }) => (
-  <View
-    style={[
-      BaseViewStyle.container,
-      center ? BaseViewStyle.center : null,
-      margin === "medium" ? BaseViewStyle.mediumMargin : null,
-      color === "main"
-        ? BaseViewStyle.backgroundMain
-        : BaseViewStyle.background,
-      bottomSpacer ? BaseViewStyle.bottomSpacer : null,
-    ]}
-  >
-    {children}
-  </View>
+  <ThemeProvider.Consumer>
+    {(theme) => (
+      <View
+        style={[
+          BaseViewStyle.container,
+          center ? BaseViewStyle.center : null,
+          margin === "medium" ? BaseViewStyle.mediumMargin : null,
+          color === "main"
+            ? BaseViewStyle[`${theme}BackgroundMain`]
+            : BaseViewStyle.background,
+          bottomSpacer ? BaseViewStyle.bottomSpacer : null,
+        ]}
+      >
+        {children}
+      </View>
+    )}
+  </ThemeProvider.Consumer>
 );
 
 export default BaseView;

@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import R from "../../routes";
 import AddAlarmNavigator from "./Stacks/AddAlarmNavigator";
@@ -17,7 +17,7 @@ const headerStyle = {
 };
 
 const options = {
-  headerRight: (props) => <Menu />,
+  headerRight: (props) => <Menu {...props} />,
 };
 
 const RootNavigator = () => (

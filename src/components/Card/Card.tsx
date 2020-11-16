@@ -1,5 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import { TouchableHighlight, View } from "react-native";
+import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
+import { THEMES } from "../../store/constants/settingsConstants";
+import { dark, light as lightTheme } from "../../theme/colors/values";
 import { CardStyle } from "./Card.Style";
 
 interface ICard {
@@ -22,33 +25,41 @@ const Card: FC<ICard> = ({
   touchable = false,
   onTouch,
 }) => (
-  <ConditionalWrapper
-    condition={touchable}
-    wrapper={(children) => (
-      <TouchableHighlight
-        onPressOut={onTouch}
-        delayPressIn={0}
-        activeOpacity={1}
-        underlayColor="#eee"
-        style={CardStyle.touchableFeedback}
+  <ThemeProvider.Consumer>
+    {(theme) => (
+      <ConditionalWrapper
+        condition={touchable}
+        wrapper={(children) => (
+          <TouchableHighlight
+            onPressOut={onTouch}
+            delayPressIn={0}
+            activeOpacity={1}
+            underlayColor={theme === THEMES.LIGHT ? lightTheme.cardShadow : dark.cardShadow}
+            style={CardStyle.touchableFeedback}
+          >
+            {children}
+          </TouchableHighlight>
+        )}
       >
-        {children}
-      </TouchableHighlight>
+        <View
+          style={[
+            CardStyle.container,
+            {
+              backgroundColor: theme === THEMES.LIGHT ? lightTheme.card : dark.card,
+              shadowColor: theme === THEMES.LIGHT ? lightTheme.cardShadow : dark.cardShadow,
+            },
+            CardStyle[alignment],
+            fixedHight > 0 && {
+              height: fixedHight,
+            },
+            light ? CardStyle.light : CardStyle.dark,
+          ]}
+        >
+          {children}
+        </View>
+      </ConditionalWrapper>
     )}
-  >
-    <View
-      style={[
-        CardStyle.container,
-        CardStyle[alignment],
-        fixedHight > 0 && {
-          height: fixedHight,
-        },
-        light ? CardStyle.light : CardStyle.dark,
-      ]}
-    >
-      {children}
-    </View>
-  </ConditionalWrapper>
+  </ThemeProvider.Consumer>
 );
 
 export default Card;

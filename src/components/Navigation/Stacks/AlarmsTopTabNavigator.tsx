@@ -18,7 +18,7 @@ const tabBarOptions = {
 };
 
 const AlarmsTopTabNavigator = () => (
-  <Tab.Navigator tabBarOptions={tabBarOptions} swipeEnabled={false}>
+  <Tab.Navigator /*tabBarOptions={tabBarOptions}*/ swipeEnabled={false}>
     <Tab.Screen name="All Alarms" component={AllAlarms} />
     <Tab.Screen name="Muted Alarms" component={MutedAlarms} />
   </Tab.Navigator>

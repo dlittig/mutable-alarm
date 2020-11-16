@@ -4,6 +4,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { Text } from "react-native-paper";
 
 import { NumberSelectorStyle } from "./NumberSelector.style";
+import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
+import { THEMES } from "../../store/constants/settingsConstants";
+import { dark, light } from "../../theme/colors/values";
 
 const NumberSelector = ({ initialValue, max, min, callback }) => {
   const initialState = {
@@ -39,9 +42,7 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
   );
 
   const increase = () => {
-    console.log("press i");
     if (state.value < max) {
-      console.log("press ii");
       dispatch({ type: "INCREASE" });
       console.log("Status:", state.value, max, initialValue, initialState);
     }
@@ -51,9 +52,7 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
   };
 
   const decrease = () => {
-    console.log("press d");
     if (state.value > min) {
-      console.log("press dd");
       dispatch({ type: "DECREASE" });
       console.log("Status:", state.value, min, initialValue, initialState);
     }
@@ -81,7 +80,15 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
         onPressOut={stop}
       >
         <View>
-          <AntDesign name="up" size={30} />
+          <ThemeProvider.Consumer>
+            {(theme) => (
+              <AntDesign
+                name="up"
+                size={30}
+                color={theme === THEMES.LIGHT ? light.text : dark.text}
+              />
+            )}
+          </ThemeProvider.Consumer>
         </View>
       </TouchableHighlight>
       <Text style={NumberSelectorStyle.text}>{pad(state.value)}</Text>
@@ -95,7 +102,15 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
         onPressOut={stop}
       >
         <View>
-          <AntDesign name="down" size={30} />
+        <ThemeProvider.Consumer>
+            {(theme) => (
+              <AntDesign
+                name="down"
+                size={30}
+                color={theme === THEMES.LIGHT ? light.text : dark.text}
+              />
+            )}
+          </ThemeProvider.Consumer>
         </View>
       </TouchableHighlight>
     </View>

@@ -9,7 +9,7 @@ import StopwatchNavigator from "./StopwatchNavigator";
 const Tab = createBottomTabNavigator();
 
 const options = ({ route }) => ({
-  tabBarIcon: ({ focused, horizontal, tintColor }) => {
+  tabBarIcon: ({ focused, horizontal, color}) => {
     const { name } = route;
     let icon = "";
     if (name === R.ALL_ALARMS) {
@@ -21,25 +21,16 @@ const options = ({ route }) => ({
     }
 
     // You can return any component that you like here!
-    return <MaterialIcons name={icon} size={25} color={tintColor} />;
+    return <MaterialIcons name={icon} size={25} color={color} />;
   },
 });
 
 function BottomTabNavigator() {
   return (
     <Tab.Navigator initialRouteName={R.ALL_ALARMS} screenOptions={options}>
-      <Tab.Screen
-        name={R.ALL_ALARMS}
-        component={TopTabNavigator}
-      />
-      <Tab.Screen
-        name={R.TIMER}
-        component={TimerNavigator}
-      />
-      <Tab.Screen
-        name={R.STOPWATCH}
-        component={StopwatchNavigator}
-      />
+      <Tab.Screen name={R.ALL_ALARMS} component={TopTabNavigator} />
+      <Tab.Screen name={R.TIMER} component={TimerNavigator} />
+      <Tab.Screen name={R.STOPWATCH} component={StopwatchNavigator} />
     </Tab.Navigator>
   );
 }

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { light } from "../../theme/colors/values";
 
 const NumberSelectorStyle = StyleSheet.create({
   container: {

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { dark, light } from "../../theme/colors/values";
 
 const AlarmStyle = StyleSheet.create({
   weekdays: {
@@ -16,6 +17,15 @@ const AlarmStyle = StyleSheet.create({
   text: {
     fontSize: 30,
   },
+  dark: {
+    color: dark.text
+  },
+  light: {
+    color: light.text
+  },
+  black: {
+
+  }
 });
 
 export { AlarmStyle };
