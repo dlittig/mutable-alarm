@@ -1,13 +1,23 @@
-import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { DefaultTheme, DarkTheme, Theme } from "@react-navigation/native";
 import { THEMES } from "../store/constants/settingsConstants";
+import { ThemeColors, IColors } from "./colors/values";
 
 const get = (scheme) => {
-  const values =
-    scheme === THEMES.DARK
-      ? require("./colors/values").dark
-      : require("./colors/values").light;
+  let values: IColors = null;
 
-  let theme = {};
+  switch (scheme) {
+    case THEMES.BLACK:
+      values = ThemeColors.BlackColors;
+      break;
+    case THEMES.LIGHT:
+      values = ThemeColors.LightColors;
+      break;
+    case THEMES.DARK:
+      values = ThemeColors.DarkColors;
+      break;
+  }
+
+  let theme: Theme = {} as Theme;
 
   if (scheme === THEMES.DARK || scheme === THEMES.BLACK) {
     theme = {

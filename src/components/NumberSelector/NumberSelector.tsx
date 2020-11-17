@@ -6,7 +6,7 @@ import { Text } from "react-native-paper";
 import { NumberSelectorStyle } from "./NumberSelector.style";
 import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 import { THEMES } from "../../store/constants/settingsConstants";
-import { dark, light } from "../../theme/colors/values";
+import { ThemeColors } from "../../theme/colors/values";
 
 const NumberSelector = ({ initialValue, max, min, callback }) => {
   const initialState = {
@@ -68,6 +68,17 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
     interval.current = null;
   };
 
+  const getColor = (theme) => {
+    switch (theme) {
+      case THEMES.LIGHT:
+        return ThemeColors.LightColors.text;
+      case THEMES.DARK:
+        return ThemeColors.DarkColors.text;
+      case THEMES.BLACK:
+        return ThemeColors.BlackColors.text;
+    }
+  };
+
   return (
     <View style={NumberSelectorStyle.container}>
       <TouchableHighlight
@@ -82,11 +93,7 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
         <View>
           <ThemeProvider.Consumer>
             {(theme) => (
-              <AntDesign
-                name="up"
-                size={30}
-                color={theme === THEMES.LIGHT ? light.text : dark.text}
-              />
+              <AntDesign name="up" size={30} color={getColor(theme)} />
             )}
           </ThemeProvider.Consumer>
         </View>
@@ -102,12 +109,12 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
         onPressOut={stop}
       >
         <View>
-        <ThemeProvider.Consumer>
+          <ThemeProvider.Consumer>
             {(theme) => (
               <AntDesign
                 name="down"
                 size={30}
-                color={theme === THEMES.LIGHT ? light.text : dark.text}
+                color={getColor(theme)}
               />
             )}
           </ThemeProvider.Consumer>

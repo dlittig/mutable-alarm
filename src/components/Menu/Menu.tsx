@@ -6,13 +6,24 @@ import { openPanel } from "../../store/actions/panelActions";
 import Panel from "./Menu.Panel";
 import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 import { THEMES } from "../../store/constants/settingsConstants";
-import { dark, light } from "../../theme/colors/values";
+import { ThemeColors } from "../../theme/colors/values";
+
+const getColor = (theme) => {
+  switch (theme) {
+    case THEMES.LIGHT:
+      return ThemeColors.LightColors.text;
+    case THEMES.DARK:
+      return ThemeColors.DarkColors.text;
+    case THEMES.BLACK:
+      return ThemeColors.BlackColors.text;
+  }
+};
 
 const Menu = ({ reduxOpenPanel }) => (
   <ThemeProvider.Consumer>
     {(theme) => (
       <IconButton
-        color={theme === THEMES.LIGHT ? light.text : dark.text}
+        color={getColor(theme)}
         icon="dots-vertical"
         size={25}
         onPress={reduxOpenPanel}

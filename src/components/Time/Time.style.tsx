@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { dark, light } from "../../theme/colors/values";
+import { ThemeColors } from "../../theme/colors/values";
 
 const TimeStyle = StyleSheet.create({
   container: {
@@ -10,12 +10,14 @@ const TimeStyle = StyleSheet.create({
     borderRadius: 10,
   },
   lightContainer: {
-    backgroundColor: light.card,
+    backgroundColor: ThemeColors.LightColors.card,
   },
   darkContainer: {
-    backgroundColor: dark.card,
+    backgroundColor: ThemeColors.DarkColors.card,
   },
-  blackContainer: {},
+  blackContainer: {
+    backgroundColor: ThemeColors.BlackColors.card,
+  },
   text: {
     fontSize: 70,
   },
@@ -23,9 +25,11 @@ const TimeStyle = StyleSheet.create({
     color: "#595959",
   },
   darkText: {
-    color: dark.text,
+    color: ThemeColors.DarkColors.text,
   },
-  blackText: {},
+  blackText: {
+    color: ThemeColors.BlackColors.text,
+  },
 });
 
 export { TimeStyle };

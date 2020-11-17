@@ -13,10 +13,19 @@ import Navigator from "./src/services/NavigatorService";
 import ThemeProvider from "./src/provider/ThemeProvider/ThemeProvider";
 import { StatusBar } from "react-native";
 import { THEMES } from "./src/store/constants/settingsConstants";
-import { dark, light } from "./src/theme/colors/values";
+import { ThemeColors } from "./src/theme/colors/values";
 
 const App = () => {
-  const colorScheme = useColorScheme();
+  const getBackgroundColor = (theme) => {
+    switch (theme) {
+      case THEMES.LIGHT:
+        return ThemeColors.LightColors.card;
+      case THEMES.DARK:
+        return ThemeColors.DarkColors.card;
+      case THEMES.BLACK:
+        return ThemeColors.BlackColors.card;
+    }
+  };
 
   return (
     <Provider store={store}>
@@ -36,7 +45,7 @@ const App = () => {
                       theme === THEMES.LIGHT ? "dark-content" : "light-content"
                     }
                     animated={true}
-                    backgroundColor={theme === THEMES.LIGHT ? light.card : dark.card}
+                    backgroundColor={getBackgroundColor(theme)}
                   />
                   <RootNavigator />
                   <Menu.Panel />

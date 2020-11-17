@@ -1,4 +1,4 @@
-interface IColors {
+export interface IColors {
   primary: string;
   accent: string;
   card: string;
@@ -8,17 +8,33 @@ interface IColors {
   background: string;
 }
 
-const dark: IColors = {
+interface IThemeColors {
+  DarkColors: IColors;
+  LightColors: IColors;
+  BlackColors: IColors;
+}
+
+const DarkColors: IColors = {
   primary: "#077aff",
   accent: "#077aff",
   card: "#333333",
   cardHighlight: "#444444",
-  cardShadow: "",
+  cardShadow: "#3f3f3f",
   text: "#ffffff",
   background: "#222",
 };
 
-const light: IColors = {
+const BlackColors: IColors = {
+  primary: "#077aff",
+  accent: "#077aff",
+  card: "#000000",
+  cardHighlight: "#444444",
+  cardShadow: "#000000",
+  text: "#ffffff",
+  background: "#000000",
+};
+
+const LightColors: IColors = {
   primary: "#077aff",
   accent: "#077aff",
   card: "#ffffff",
@@ -28,4 +44,8 @@ const light: IColors = {
   background: "rgb(242, 242, 242)",
 };
 
-export { dark, light };
+export const ThemeColors: IThemeColors = {
+  DarkColors,
+  LightColors,
+  BlackColors,
+};

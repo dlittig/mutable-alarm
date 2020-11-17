@@ -8,8 +8,7 @@ import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 import R from "../../routes";
 import Navigator from "../../services/NavigatorService";
 import { closePanel } from "../../store/actions/panelActions";
-import { THEMES } from "../../store/constants/settingsConstants";
-import { dark, light } from "../../theme/colors/values";
+import { MenuPanelStyle } from "./Menu.Panel.style"
 
 const Panel = ({ panelIsOpen, reduxClosePanel, navigation }) => {
   const panelProps = {
@@ -30,10 +29,8 @@ const Panel = ({ panelIsOpen, reduxClosePanel, navigation }) => {
         <SwipeablePanel
           {...panelProps}
           isActive={panelIsOpen}
-          style={{
-            backgroundColor: theme === THEMES.LIGHT ? light.card : dark.card,
-          }}
-          closeIconStyle={{backgroundColor: theme === THEMES.LIGHT ? light.card : dark.card}}
+          style={MenuPanelStyle[`${theme}Background`]}
+          closeIconStyle={MenuPanelStyle[`${theme}Background`]}
         >
           <View>
             <List.Item

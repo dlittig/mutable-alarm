@@ -1,12 +1,11 @@
 import { StyleSheet } from "react-native";
+import { ThemeColors } from "../../theme/colors/values";
 
 const CardStyle = StyleSheet.create({
   container: {
     margin: 5,
     paddingHorizontal: 15,
     borderRadius: 10,
-    // backgroundColor: "#fff",
-    // shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -14,7 +13,7 @@ const CardStyle = StyleSheet.create({
     shadowOpacity: 0.2,
   },
   touchableFeedback: {
-    borderRadius: 10
+    borderRadius: 10,
   },
   text: {
     fontSize: 30,
@@ -40,6 +39,18 @@ const CardStyle = StyleSheet.create({
   },
   fixedHeight: {
     height: 80,
+  },
+  lightColors: {
+    backgroundColor: ThemeColors.LightColors.card,
+    shadowColor: ThemeColors.LightColors.cardShadow,
+  },
+  darkColors: {
+    backgroundColor: ThemeColors.DarkColors.card,
+    shadowColor: ThemeColors.DarkColors.cardShadow,
+  },
+  blackColors: {
+    backgroundColor: ThemeColors.BlackColors.card,
+    shadowColor: ThemeColors.BlackColors.cardShadow,
   },
 });
 

@@ -1,6 +1,6 @@
 import { PrivateValueStore } from "@react-navigation/core";
 import { StyleSheet } from "react-native";
-import { dark, light } from "../../theme/colors/values";
+import { ThemeColors } from "../../theme/colors/values";
 
 const BaseViewStyle = StyleSheet.create({
   container: {
@@ -16,11 +16,14 @@ const BaseViewStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  blackBackgroundMain: {
+    backgroundColor: ThemeColors.BlackColors.card,
+  },
   darkBackgroundMain: {
-    backgroundColor: dark.card,
+    backgroundColor: ThemeColors.DarkColors.card,
   },
   lightBackgroundMain: {
-    backgroundColor: light.card,
+    backgroundColor: ThemeColors.LightColors.card,
   },
   background: {},
   bottomSpacer: {
