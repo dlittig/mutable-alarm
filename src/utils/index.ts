@@ -1,5 +1,8 @@
+import { Platform, NativeModules } from "react-native";
+
 export const getCurrentTime = (date) => {
-  if (typeof date === "string" || typeof date === "number") date = new Date(date);
+  if (typeof date === "string" || typeof date === "number")
+    date = new Date(date);
 
   let time = ``;
 
@@ -44,3 +47,9 @@ export const sortBy = (target, sortProperty, order = "ASC") =>
 
     return order === "ASC" ? -1 : 1;
   }) || [];
+
+export const currentLocale =
+  Platform.OS === "ios"
+    ? NativeModules.SettingsManager.settings.AppleLocale ||
+      NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
+    : NativeModules.I18nManager.localeIdentifier;

@@ -9,7 +9,7 @@ import { withSort } from "../../enhancers/WithSort";
 import { withBottomElement } from "../../enhancers/WithBottomElement";
 import { connect } from "react-redux";
 import { deleteAlarm, toggleMuteAlarm } from "../../store/actions";
-import { IAlarm } from "../../typings/AlarmType";
+import { IAlarm } from "../../models/Alarm";
 import { FabFlatListStyle } from "./FabFlatList.style";
 import Alarm from "../Alarm";
 import ListEmpty from "../ListEmpty";

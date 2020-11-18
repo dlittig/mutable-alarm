@@ -1,15 +1,17 @@
 import React from "react";
 
+import Routes from "../../routes";
 import BaseView from "../../components/BaseView";
 import FabFlatList from "../../components/FabFlatList";
-import Routes from "../../routes";
-import { useNavigation } from "@react-navigation/native";
 import { deleteAlarm } from "../../store/actions";
-import { connect } from "react-redux";
+
 import { compose } from "redux";
-import { View } from "react-native";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
 const AllAlarms = ({ alarms }) => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const items = Object.values(alarms).filter((alarm) => !alarm.isMuted);
 
@@ -19,7 +21,7 @@ const AllAlarms = ({ alarms }) => {
         navigation={navigation}
         items={items}
         fabIcon="plus"
-        fabLabel="Add"
+        fabLabel={t("actions.add")}
         onFabPress={() => navigation.navigate(Routes.ADD_ALARM)}
       />
     </BaseView>

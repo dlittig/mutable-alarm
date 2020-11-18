@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
-import { AppearanceProvider, useColorScheme } from "react-native-appearance";
+import { AppearanceProvider } from "react-native-appearance";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 import getPaperTheme from "./src/theme/paper";
@@ -14,6 +14,10 @@ import ThemeProvider from "./src/provider/ThemeProvider/ThemeProvider";
 import { StatusBar } from "react-native";
 import { THEMES } from "./src/store/constants/settingsConstants";
 import { ThemeColors } from "./src/theme/colors/values";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import translations from "./src/translations";
+import { currentLocale } from "./src/utils";
 
 const App = () => {
   const getBackgroundColor = (theme) => {
@@ -26,6 +30,17 @@ const App = () => {
         return ThemeColors.BlackColors.card;
     }
   };
+
+  i18n
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
+      resources: translations,
+      lng: currentLocale,
+      fallbackLng: "en-US",
+      interpolation: {
+        escapeValue: false,
+      },
+    });
 
   return (
     <Provider store={store}>

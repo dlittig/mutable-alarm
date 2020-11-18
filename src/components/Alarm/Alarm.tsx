@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Switch } from "react-native-paper";
 import { getCurrentTime } from "../../utils";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { IAlarm } from "../../typings/AlarmType";
+import { IAlarm } from "../../models/Alarm";
 import Card from "../Card";
 import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 
