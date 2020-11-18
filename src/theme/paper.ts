@@ -22,7 +22,7 @@ const get = (scheme) => {
   if (scheme === THEMES.DARK || scheme === THEMES.BLACK) {
     theme = {
       ...DarkTheme,
-      roundness: 2,
+      roundness: 6,
       colors: {
         ...DarkTheme.colors,
         primary: values.primary,

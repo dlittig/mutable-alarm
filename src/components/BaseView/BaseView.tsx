@@ -9,6 +9,7 @@ interface IBaseView {
   center: boolean;
   margin: "medium" | "none";
   color: "main" | "background";
+  spaceBetween?: boolean;
   bottomSpacer?: boolean;
 }
 
@@ -17,6 +18,7 @@ const BaseView: FC<IBaseView> = ({
   center,
   margin,
   color,
+  spaceBetween = false,
   bottomSpacer = false,
 }) => (
   <ThemeProvider.Consumer>
@@ -25,6 +27,7 @@ const BaseView: FC<IBaseView> = ({
         style={[
           BaseViewStyle.container,
           center ? BaseViewStyle.center : null,
+          spaceBetween ? BaseViewStyle.spaceBetween : null,
           margin === "medium" ? BaseViewStyle.mediumMargin : null,
           color === "main"
             ? BaseViewStyle[`${theme}BackgroundMain`]

@@ -44,7 +44,6 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
   const increase = () => {
     if (state.value < max) {
       dispatch({ type: "INCREASE" });
-      console.log("Status:", state.value, max, initialValue, initialState);
     }
 
     if (interval.current === null)
@@ -54,7 +53,6 @@ const NumberSelector = ({ initialValue, max, min, callback }) => {
   const decrease = () => {
     if (state.value > min) {
       dispatch({ type: "DECREASE" });
-      console.log("Status:", state.value, min, initialValue, initialState);
     }
 
     if (interval.current === null)

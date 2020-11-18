@@ -16,6 +16,10 @@ const BaseViewStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  spaceBetween: {
+    alignContent: "space-between",
+    justifyContent: "space-between",
+  },
   blackBackgroundMain: {
     backgroundColor: ThemeColors.BlackColors.card,
   },

@@ -16,7 +16,7 @@ const Estimation: FC<IEstimation> = ({ value, start }) => {
 
   return (
     <Text>
-      Will fire at:{" "}
+      Timer will finish at:{" "}
       {`${fill(start.getHours())}:${fill(
         start.getMinutes()
       )}:${fill(start.getSeconds())}`}

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { connect } from "react-redux";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import BaseView from "../../components/BaseView";
@@ -42,7 +42,13 @@ const Stopwatch: FC<IStopWatch> = ({
   );
 
   return (
-    <BaseView center={false} color="main" margin="medium" bottomSpacer={true}>
+    <BaseView
+      center={false}
+      spaceBetween={true}
+      color="main"
+      margin="medium"
+      bottomSpacer={true}
+    >
       <Counter.Up />
 
       {laps.length > 0 && (
@@ -53,37 +59,39 @@ const Stopwatch: FC<IStopWatch> = ({
           renderItem={(item) => renderLapItem(item)}
         ></FlatList>
       )}
-      <Button
-        mode="contained"
-        onPress={
-          isActive && !isPaused
-            ? () => reduxPauseCounter("up")
-            : () => reduxStartCounter("up")
-        }
-      >
-        {isActive && !isPaused ? "Stop" : "Start"}
-      </Button>
-      {isPaused && (
+      <View>
         <Button
-          mode="outlined"
-          onPress={() => {
-            reduxResetCounter("up");
-            setLaps([]);
-          }}
-        >
-          Reset
-        </Button>
-      )}
-      {isActive && (
-        <Button
-          mode="text"
-          onPress={() =>
-            setLaps([{ id: new Date().getTime(), value: counter }, ...laps])
+          mode="contained"
+          onPress={
+            isActive && !isPaused
+              ? () => reduxPauseCounter("up")
+              : () => reduxStartCounter("up")
           }
         >
-          Lap
+          {isActive && !isPaused ? "Stop" : "Start"}
         </Button>
-      )}
+        {isPaused && (
+          <Button
+            mode="outlined"
+            onPress={() => {
+              reduxResetCounter("up");
+              setLaps([]);
+            }}
+          >
+            Reset
+          </Button>
+        )}
+        {isActive && (
+          <Button
+            mode="text"
+            onPress={() =>
+              setLaps([{ id: new Date().getTime(), value: counter }, ...laps])
+            }
+          >
+            Lap
+          </Button>
+        )}
+      </View>
     </BaseView>
   );
 };

@@ -25,8 +25,6 @@ const ThemeProvider = ({ children, theme }) => {
     }
   }
 
-  console.log("THEME", scheme, colorScheme);
-
   return (
     <ThemeContext.Provider value={scheme}>
       <PaperProvider theme={getPaperTheme(scheme)}>{children}</PaperProvider>
