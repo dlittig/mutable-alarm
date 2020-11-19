@@ -14,10 +14,8 @@ import ThemeProvider from "./src/provider/ThemeProvider/ThemeProvider";
 import { StatusBar } from "react-native";
 import { THEMES } from "./src/store/constants/settingsConstants";
 import { ThemeColors } from "./src/theme/colors/values";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import translations from "./src/translations";
-import { currentLocale } from "./src/utils";
+
+import i18n from "./src/translations/i18n";
 
 const App = () => {
   const getBackgroundColor = (theme) => {
@@ -31,16 +29,8 @@ const App = () => {
     }
   };
 
-  i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
-    .init({
-      resources: translations,
-      lng: currentLocale,
-      fallbackLng: "en-US",
-      interpolation: {
-        escapeValue: false,
-      },
-    });
+  // Keep this line to signal that i18n should be initialized
+  i18n;
 
   return (
     <Provider store={store}>

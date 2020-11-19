@@ -28,11 +28,6 @@ const AllAlarms = ({ alarms }) => {
   );
 };
 
-AllAlarms.navigationOptions = {
-  title: "All alarms",
-  headerTitle: "Alarms",
-};
-
 const mapStateToProps = ({ alarmsReducer: { alarms } }) => ({ alarms });
 
 const mapDispatchToProps = {
