@@ -8,6 +8,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { IAlarm } from "../../models/Alarm";
 import Card from "../Card";
 import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
+import { useTranslation } from "react-i18next";
 
 const nextAlarm = (time) => time;
 

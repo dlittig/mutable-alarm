@@ -11,6 +11,7 @@ import {
   ToggleButton,
 } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const initialState = { daysSelected: [] };
 
@@ -45,6 +46,7 @@ const style = StyleSheet.create({
 });
 
 const ScheduleDialog = ({ onDone }) => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState("2");
   const [mode, setMode] = useState("week");
@@ -54,15 +56,15 @@ const ScheduleDialog = ({ onDone }) => {
   return (
     <View>
       <Button mode="outlined" onPress={() => setVisible(true)}>
-        Setup schedule...
+        {t("actions.setup_schedule")}
       </Button>
       <Portal>
         <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-          <Dialog.Title>Custom schedule</Dialog.Title>
+          <Dialog.Title>{t("dialogs.custom_schedule.title")}</Dialog.Title>
           <Dialog.Content>
             <TextInput
               mode="outlined"
-              label="Every..."
+              label={t("dialogs.custom_schedule.every")}
               value={value}
               onChangeText={(text) => setValue(text)}
             />
@@ -73,11 +75,11 @@ const ScheduleDialog = ({ onDone }) => {
             >
               <View style={style.view}>
                 <RadioButton value="days" />
-                <Text>Days</Text>
+                <Text>{t("dialogs.custom_schedule.days")}</Text>
               </View>
               <View style={style.view}>
                 <RadioButton value="week" />
-                <Text>Weeks</Text>
+                <Text>{t("dialogs.custom_schedule.weeks")}</Text>
               </View>
             </RadioButton.Group>
 
@@ -91,19 +93,19 @@ const ScheduleDialog = ({ onDone }) => {
                     dispatch({ type: TOGGLE_WEEKDAY, day });
                   }}
                 />
-                <Text>{day}</Text>
+                <Text>{t(`dialogs.custom_schedule.${day}`)}</Text>
               </View>
             ))}
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => setVisible(false)}>Cancel</Button>
+            <Button onPress={() => setVisible(false)}>{t("actions.cancel")}</Button>
             <Button
               onPress={() => {
                 setVisible(false);
                 onDone(value, mode, state.daysSelected);
               }}
             >
-              Done
+              {t("actions.save")}
             </Button>
           </Dialog.Actions>
         </Dialog>

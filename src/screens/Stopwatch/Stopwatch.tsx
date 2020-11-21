@@ -13,6 +13,7 @@ import {
 } from "../../store/actions/counterActions";
 import { getTime } from "../../utils/counter";
 import { StopwatchStyle } from "./Stopwatch.style";
+import { useTranslation } from "react-i18next";
 
 interface IStopWatch {
   isPaused: boolean;
@@ -31,6 +32,7 @@ const Stopwatch: FC<IStopWatch> = ({
   reduxStartCounter,
   reduxPauseCounter,
 }) => {
+  const { t } = useTranslation();
   const [laps, setLaps] = useState([]);
 
   const renderLapItem = ({ item, index }) => (
@@ -68,7 +70,7 @@ const Stopwatch: FC<IStopWatch> = ({
               : () => reduxStartCounter("up")
           }
         >
-          {isActive && !isPaused ? "Stop" : "Start"}
+          {isActive && !isPaused ? t("actions.stop") : t("actions.start")}
         </Button>
         {isPaused && (
           <Button
@@ -78,7 +80,7 @@ const Stopwatch: FC<IStopWatch> = ({
               setLaps([]);
             }}
           >
-            Reset
+            {t("actions.reset")}
           </Button>
         )}
         {isActive && (
@@ -88,7 +90,7 @@ const Stopwatch: FC<IStopWatch> = ({
               setLaps([{ id: new Date().getTime(), value: counter }, ...laps])
             }
           >
-            Lap
+            {t("actions.lap")}
           </Button>
         )}
       </View>

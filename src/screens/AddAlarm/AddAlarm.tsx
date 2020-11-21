@@ -13,6 +13,7 @@ import { AddAlarmStyle } from "./AddAlarm.style";
 import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
 import { addAlarm as addAlarmAction } from "../../store/actions";
 import BaseView from "../../components/BaseView";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   reduxAddAlarm: (object) => void;
@@ -29,7 +30,7 @@ interface IRouteProps {
 }
 
 const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
-  const navigation = useNavigation();
+  const { t } = useTranslation();
   const route = useRoute();
 
   const routeParams = route.params;
@@ -48,7 +49,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   const onSave = () => {
     if (text === "") {
       ToastAndroid.showWithGravityAndOffset(
-        "Please give your alarm a name!",
+        t("toasts.alarm_name_required"),
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM,
         0,
@@ -84,7 +85,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
 
       <TextInput
         mode="outlined"
-        label="Name"
+        label={t("fields.name")}
         value={text}
         onChangeText={(text) => setText(text)}
       />
@@ -100,7 +101,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
       <FAB
         style={AddAlarmStyle.fab}
         icon="check"
-        label="Save"
+        label={t("actions.save")}
         onPress={onSave}
       />
     </BaseView>

@@ -13,6 +13,7 @@ export const en_US = {
       delete: "Delete",
       mute: "Mute",
       unmute: "Unmute",
+      setup_schedule: "Setup schedule",
     },
     screens: {
       all_alarms: "All Alarms",
@@ -41,6 +42,22 @@ export const en_US = {
       timer: {
         set: "Set timer",
       },
+      custom_schedule: {
+        title: "Schedule",
+        every: "Every",
+        days: "Days",
+        weeks: "Weeks",
+        mo: "Monday",
+        tue: "Tueday",
+        wed: "Wednesday",
+        thu: "Thursday",
+        fri: "Friday",
+        sat: "Saturday",
+        sun: "Sunday",
+      },
+    },
+    toasts: {
+      alarm_name_required: "Please give your alarm a name",
     },
     settings: {
       display_theme: "Display theme",
@@ -48,6 +65,9 @@ export const en_US = {
       dark: "Dark",
       black: "Black",
       automatic: "Automatic",
+    },
+    fields: {
+      name: "Name",
     },
   },
 };

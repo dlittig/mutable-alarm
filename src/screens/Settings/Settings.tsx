@@ -5,6 +5,7 @@ import { THEMES } from "../../store/constants/settingsConstants";
 
 import { List } from "react-native-paper";
 import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 interface ISettings {
   theme: string;
@@ -12,6 +13,7 @@ interface ISettings {
 }
 
 const Settings: FC<ISettings> = ({ theme, reduxApplyTheme }) => {
+  const { t } = useTranslation();
   const leftProps = {
     light: undefined,
     black: undefined,
@@ -29,31 +31,31 @@ const Settings: FC<ISettings> = ({ theme, reduxApplyTheme }) => {
     <BaseView center={false} color="main" margin="none">
       <List.Section>
         <List.Accordion
-          title="Display theme"
-          description="Adjust how the appearance of the app should look like"
+          title={t("settings.display_theme")}
+          description={t("descriptions.settings.display_theme")}
           left={(props) => <List.Icon {...props} icon="theme-light-dark" />}
         >
           <List.Item
-            title="Light"
+            title={t("settings.light")}
             {...leftProps.light}
             onPress={() => reduxApplyTheme(THEMES.LIGHT)}
           />
 
           <List.Item
-            title="Dark"
+            title={t("settings.dark")}
             {...leftProps.dark}
             onPress={() => reduxApplyTheme(THEMES.DARK)}
           />
           <List.Item
-            title="Black"
+            title={t("settings.black")}
             {...leftProps.black}
             onPress={() => reduxApplyTheme(THEMES.BLACK)}
           />
           <List.Item
             onPress={() => reduxApplyTheme(THEMES.AUTO)}
             {...leftProps.auto}
-            title="Automatic"
-            description="The app will change its appearance based on your phone's settings"
+            title={t("settings.automatic")}
+            description={t("descriptions.settings.automatic")}
           />
         </List.Accordion>
       </List.Section>

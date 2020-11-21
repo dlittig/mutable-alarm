@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { List } from "react-native-paper";
 import { connect } from "react-redux";
@@ -8,9 +9,10 @@ import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 import R from "../../routes";
 import Navigator from "../../services/NavigatorService";
 import { closePanel } from "../../store/actions/panelActions";
-import { MenuPanelStyle } from "./Menu.Panel.style"
+import { MenuPanelStyle } from "./Menu.Panel.style";
 
 const Panel = ({ panelIsOpen, reduxClosePanel, navigation }) => {
+  const { t } = useTranslation();
   const panelProps = {
     fullWidth: true,
     showCloseButton: true,
@@ -34,20 +36,20 @@ const Panel = ({ panelIsOpen, reduxClosePanel, navigation }) => {
         >
           <View>
             <List.Item
-              title="Donate"
-              description="Buy me a coffee"
+              title={t("screens.donate")}
+              description={t("descriptions.options.donate")}
               left={(props) => <List.Icon {...props} icon="gift" />}
               onPress={() => navigate(R.DONATE)}
             />
             <List.Item
-              title="Settings"
-              description="Configure app behaviour"
+              title={t("screens.settings")}
+              description={t("descriptions.options.settings")}
               left={(props) => <List.Icon {...props} icon="cogs" />}
               onPress={() => navigate(R.SETTINGS)}
             />
             <List.Item
-              title="About"
-              description="License and more info"
+              title={t("screens.about")}
+              description={t("descriptions.options.about")}
               left={(props) => <List.Icon {...props} icon="information" />}
               onPress={() => navigate(R.ABOUT)}
             />

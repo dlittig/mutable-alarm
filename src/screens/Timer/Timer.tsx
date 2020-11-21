@@ -11,6 +11,7 @@ import {
   resetCounter,
   startCounter,
 } from "../../store/actions/counterActions";
+import { useTranslation } from "react-i18next";
 
 interface ITimer {
   isPaused: boolean;
@@ -30,42 +31,46 @@ const Timer: FC<ITimer> = ({
   reduxResetCounter,
   reduxStartCounter,
   reduxPauseCounter,
-}) => (
-  <BaseView
-    spaceBetween={true}
-    center={false}
-    color="main"
-    margin="medium"
-    bottomSpacer={true}
-  >
-    <Counter.Down />
+}) => {
+  const { t } = useTranslation();
 
-    {isActive && <Estimation value={initialValue} start={activated} />}
+  return (
+    <BaseView
+      spaceBetween={true}
+      center={false}
+      color="main"
+      margin="medium"
+      bottomSpacer={true}
+    >
+      <Counter.Down />
 
-    <View>
-      <Button
-        mode="contained"
-        onPress={
-          isActive && !isPaused
-            ? () => reduxPauseCounter("down")
-            : () => reduxStartCounter("down")
-        }
-      >
-        {isActive && !isPaused ? "Stop" : "Start"}
-      </Button>
-      {isPaused && (
+      {isActive && <Estimation value={initialValue} start={activated} />}
+
+      <View>
         <Button
-          mode="outlined"
-          onPress={() => {
-            reduxResetCounter("down");
-          }}
+          mode="contained"
+          onPress={
+            isActive && !isPaused
+              ? () => reduxPauseCounter("down")
+              : () => reduxStartCounter("down")
+          }
         >
-          Reset
+          {isActive && !isPaused ? t("actions.stop") : t("actions.start")}
         </Button>
-      )}
-    </View>
-  </BaseView>
-);
+        {isPaused && (
+          <Button
+            mode="outlined"
+            onPress={() => {
+              reduxResetCounter("down");
+            }}
+          >
+            {t("actions.reset")}
+          </Button>
+        )}
+      </View>
+    </BaseView>
+  );
+};
 
 const mapStateToProps = ({
   counterReducer: {

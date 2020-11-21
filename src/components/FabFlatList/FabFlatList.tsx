@@ -15,6 +15,7 @@ import Alarm from "../Alarm";
 import ListEmpty from "../ListEmpty";
 import ConfirmDialog from "../Dialogs/ConfirmDialog";
 import R from "../../routes";
+import { TranslationProps, withTranslation } from "react-i18next";
 
 interface IFabFlatListProps {
   items: Array<IAlarm>;
@@ -27,6 +28,7 @@ interface IFabFlatListProps {
   fabLabel: string;
   fabIcon: ReactNode;
   disableFab: boolean;
+  t: (string) => string;
 }
 
 interface IFabFlatListState {
@@ -69,8 +71,16 @@ class FabFlatList extends React.Component<
         style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
         onPress={() => this.props.reduxToggleMuteAlarm(item.id)}
       >
-        {item.isMuted && <Text style={FabFlatListStyle.backText}>Unmute</Text>}
-        {!item.isMuted && <Text style={FabFlatListStyle.backText}>Mute</Text>}
+        {item.isMuted && (
+          <Text style={FabFlatListStyle.backText}>
+            {this.props.t("actions.unmute")}
+          </Text>
+        )}
+        {!item.isMuted && (
+          <Text style={FabFlatListStyle.backText}>
+            {this.props.t("actions.mute")}
+          </Text>
+        )}
       </TouchableOpacity>
       <TouchableOpacity
         style={[
@@ -84,7 +94,7 @@ class FabFlatList extends React.Component<
           })
         }
       >
-        <Text style={FabFlatListStyle.backText}>Edit</Text>
+        <Text style={FabFlatListStyle.backText}>{this.props.t("actions.edit")}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
@@ -96,7 +106,7 @@ class FabFlatList extends React.Component<
           this.setState({ showConfirmation: true });
         }}
       >
-        <Text style={FabFlatListStyle.backText}>Delete</Text>
+        <Text style={FabFlatListStyle.backText}>{this.props.t("actions.delete")}</Text>
       </TouchableOpacity>
       <ConfirmDialog
         title="Confirmation"
@@ -172,7 +182,8 @@ const mapDispatchToProps = {
 const enhance = compose(
   connect(null, mapDispatchToProps),
   withSort,
-  withBottomElement
+  withBottomElement,
+  withTranslation()
 );
 
 export default enhance(FabFlatList);
