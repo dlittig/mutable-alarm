@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { WEEKDAYS } from "../../../models/Alarm";
 
 const initialState = { daysSelected: [] };
 
@@ -51,7 +52,6 @@ const ScheduleDialog = ({ onDone }) => {
   const [value, setValue] = useState("2");
   const [mode, setMode] = useState("week");
   const [state, dispatch] = useReducer(reducer, initialState);
-  const weekdays = ["mo", "tue", "wed", "thu", "fri", "sat", "sun"];
 
   return (
     <View>
@@ -83,7 +83,7 @@ const ScheduleDialog = ({ onDone }) => {
               </View>
             </RadioButton.Group>
 
-            {weekdays.map((day, index) => (
+            {WEEKDAYS.map((day, index) => (
               <View key={index} style={style.view}>
                 <Checkbox
                   status={
@@ -93,12 +93,14 @@ const ScheduleDialog = ({ onDone }) => {
                     dispatch({ type: TOGGLE_WEEKDAY, day });
                   }}
                 />
-                <Text>{t(`dialogs.custom_schedule.${day}`)}</Text>
+                <Text>{t(`days.${day}`)}</Text>
               </View>
             ))}
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => setVisible(false)}>{t("actions.cancel")}</Button>
+            <Button onPress={() => setVisible(false)}>
+              {t("actions.cancel")}
+            </Button>
             <Button
               onPress={() => {
                 setVisible(false);

@@ -1,14 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import Alarm from "../../models/Alarm";
+import { IAlarm } from "../../models/Alarm";
 import { getDisplayName } from "../../utils";
 
 export const withBottomElement = (Component) => {
-  class WithBottomElementComponent extends React.Component {
-    addBottomElement = (alarms) => {
+  class WithBottomElementComponent extends React.Component<
+    { items: Array<IAlarm> },
+    {}
+  > {
+    addBottomElement = (alarms: Array<IAlarm>) => {
       const list = [...alarms];
-      const alarm = new Alarm();
-      alarm.id = null;
+      const alarm: IAlarm = {
+        id: null,
+        time: 0,
+        isMuted: false,
+        isSnoozed: false,
+        name: "",
+        scheduleMode: "",
+        scheduleValue: "",
+        weekdays: [],
+      };
       alarms.push(alarm);
 
       return list;

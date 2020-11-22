@@ -1,39 +1,30 @@
 import React, { FC, useState } from "react";
-import { compose } from "redux";
+
 import uuid from "react-native-uuid";
 import { connect } from "react-redux";
-import { View, ToastAndroid } from "react-native";
+import { ToastAndroid } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { TextInput, FAB, Caption } from "react-native-paper";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Routes from "../../routes";
-import Alarm from "../../models/Alarm";
 import Time from "../../components/Time";
-import { AddAlarmStyle } from "./AddAlarm.style";
-import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
-import { addAlarm as addAlarmAction } from "../../store/actions";
-import BaseView from "../../components/BaseView";
+import { IAlarm } from "../../models/Alarm";
 import { useTranslation } from "react-i18next";
+import BaseView from "../../components/BaseView";
+import { AddAlarmStyle } from "./AddAlarm.style";
+import { addAlarm as addAlarmAction } from "../../store/actions";
+import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
 
 interface Props {
-  reduxAddAlarm: (object) => void;
-}
-
-interface IRouteProps {
-  params: {
-    text: string;
-    weekdays: Array<string>;
-    time: number;
-    scheduleValue: number;
-    scheduleMode: string;
-  };
+  reduxAddAlarm: (IAlarm) => void;
 }
 
 const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
   const { t } = useTranslation();
-  const route = useRoute();
+  const navigation = useNavigation();
+  const state = navigation.dangerouslyGetParent().dangerouslyGetState();
 
-  const routeParams = route.params;
+  const routeParams = state.routes[state.index].params;
 
   const take = (key, fallback) =>
     typeof routeParams !== "undefined" && typeof routeParams[key] !== undefined
@@ -59,15 +50,16 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
       return false;
     }
 
-    const model = new Alarm();
-    model.id = uuid.v1();
-    model.time = time;
-    model.isMuted = false;
-    model.isSnoozed = false;
-    model.weekdays = weekdays;
-    model.name = text;
-    model.scheduleMode = scheduleMode;
-    model.scheduleValue = scheduleValue;
+    const model: IAlarm = {
+      id: uuid.v1(),
+      time: time,
+      isMuted: false,
+      isSnoozed: false,
+      weekdays: weekdays,
+      name: text,
+      scheduleMode: scheduleMode,
+      scheduleValue: scheduleValue,
+    };
 
     reduxAddAlarm(model);
     navigation.navigate(Routes.APP_NAME);
@@ -112,6 +104,4 @@ const mapDispatchToProps = {
   reduxAddAlarm: addAlarmAction,
 };
 
-const enhance = compose(connect(null, mapDispatchToProps));
-
-export default enhance(AddAlarm);
+export default connect(null, mapDispatchToProps)(AddAlarm);

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { FC, ReactNode, useState } from "react";
 
 import { FAB } from "react-native-paper";
 import { View, Text, TouchableOpacity } from "react-native";
@@ -16,47 +16,47 @@ import ListEmpty from "../ListEmpty";
 import ConfirmDialog from "../Dialogs/ConfirmDialog";
 import R from "../../routes";
 import { TranslationProps, withTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/core";
+import { IconSource } from "react-native-paper/lib/typescript/src/components/Icon";
 
 interface IFabFlatListProps {
   items: Array<IAlarm>;
   onFabPress: () => any;
   reduxDeleteAlarm: (number) => any;
   reduxToggleMuteAlarm: (number) => any;
-  navigation: {
-    navigate: (string, object) => void;
-  };
   fabLabel: string;
   fabIcon: ReactNode;
   disableFab: boolean;
   t: (string) => string;
 }
 
-interface IFabFlatListState {
-  showFab: boolean;
-  showConfirmation: boolean;
-  listView: any;
-}
+const FabFlatList: FC<IFabFlatListProps> = ({
+  items,
+  onFabPress,
+  reduxDeleteAlarm,
+  reduxToggleMuteAlarm,
+  fabLabel,
+  fabIcon,
+  disableFab,
+  t,
+}) => {
+  const navigation = useNavigation();
+  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+  const [showFab, setShowFab] = useState<boolean>(true);
 
-class FabFlatList extends React.Component<
-  IFabFlatListProps,
-  IFabFlatListState
-> {
-  state = {
-    showConfirmation: false,
-    showFab: true,
-    listView: null,
-  };
-
-  renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
     if (item.id !== null) {
       return (
         <View>
           <Alarm
             id={item.id}
+            isMuted={item.isMuted}
             time={item.time}
-            isEnabled={item.isEnabled}
+            name={item.name}
+            weekdays={item.weekdays}
             isSnoozed={item.isSnoozed}
-            isMuted={false}
+            scheduleMode={item.scheduleMode}
+            scheduleValue={item.scheduleValue}
           />
         </View>
       );
@@ -65,21 +65,17 @@ class FabFlatList extends React.Component<
     }
   };
 
-  renderHiddenItem = ({ item }) => (
+  const renderHiddenItem = ({ item }) => (
     <View style={FabFlatListStyle.rowBack}>
       <TouchableOpacity
         style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
-        onPress={() => this.props.reduxToggleMuteAlarm(item.id)}
+        onPress={() => reduxToggleMuteAlarm(item.id)}
       >
         {item.isMuted && (
-          <Text style={FabFlatListStyle.backText}>
-            {this.props.t("actions.unmute")}
-          </Text>
+          <Text style={FabFlatListStyle.backText}>{t("actions.unmute")}</Text>
         )}
         {!item.isMuted && (
-          <Text style={FabFlatListStyle.backText}>
-            {this.props.t("actions.mute")}
-          </Text>
+          <Text style={FabFlatListStyle.backText}>{t("actions.mute")}</Text>
         )}
       </TouchableOpacity>
       <TouchableOpacity
@@ -89,12 +85,12 @@ class FabFlatList extends React.Component<
           FabFlatListStyle.backBtn,
         ]}
         onPress={() =>
-          this.props.navigation.navigate(R.ADD_ALARM, {
+          navigation.navigate(R.ADD_ALARM, {
             ...item,
           })
         }
       >
-        <Text style={FabFlatListStyle.backText}>{this.props.t("actions.edit")}</Text>
+        <Text style={FabFlatListStyle.backText}>{t("actions.edit")}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[
@@ -103,26 +99,25 @@ class FabFlatList extends React.Component<
           FabFlatListStyle.backBtn,
         ]}
         onPress={() => {
-          this.setState({ showConfirmation: true });
+          setShowConfirmation(true);
         }}
       >
-        <Text style={FabFlatListStyle.backText}>{this.props.t("actions.delete")}</Text>
+        <Text style={FabFlatListStyle.backText}>{t("actions.delete")}</Text>
       </TouchableOpacity>
       <ConfirmDialog
         title="Confirmation"
         text="Are you sure to delete this alarm?"
-        isVisible={this.state.showConfirmation}
+        isVisible={showConfirmation}
         onAccept={() => {
-          this.setState({ showConfirmation: false });
-          this.props.reduxDeleteAlarm(item.id);
+          setShowConfirmation(false);
+          reduxDeleteAlarm(item.id);
         }}
-        onCancel={() => this.setState({ showConfirmation: false })}
+        onCancel={() => setShowConfirmation(false)}
       />
     </View>
   );
 
-  lastItemVisible = ({ viewableItems }) => {
-    const { items } = this.props;
+  const lastItemVisible = ({ viewableItems }) => {
     const count = Object.values(items).length;
 
     // If last viewable item is the last of the list
@@ -130,49 +125,44 @@ class FabFlatList extends React.Component<
       if (
         viewableItems[viewableItems.length - 1].item.id === items[count - 1].id
       ) {
-        this.setState({ showFab: false });
+        setShowFab(false);
       } else {
-        this.setState({ showFab: true });
+        setShowFab(true);
       }
     } else {
-      this.setState({ showFab: true });
+      setShowFab(true);
     }
   };
 
-  render() {
-    const { items, onFabPress, fabLabel, fabIcon, disableFab } = this.props;
-
-    return (
-      <View style={FabFlatListStyle.container}>
-        {items.length > 0 && (
-          <SwipeListView
-            data={items}
-            onViewableItemsChanged={this.lastItemVisible}
-            renderItem={this.renderItem}
-            renderHiddenItem={this.renderHiddenItem}
-            leftOpenValue={90}
-            stopLeftSwipe={100}
-            rightOpenValue={-170}
-            stopRightSwipe={-180}
-            previewRowKey={"0"}
-            previewOpenValue={-40}
-            previewOpenDelay={3000}
-            onRowDidOpen={this.onRowDidOpen}
-          />
-        )}
-        {items.length === 0 && <ListEmpty />}
-        {!disableFab && this.state.showFab && (
-          <FAB
-            style={FabFlatListStyle.fab}
-            icon={fabIcon}
-            label={fabLabel}
-            onPress={onFabPress}
-          />
-        )}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={FabFlatListStyle.container}>
+      {items.length > 0 && (
+        <SwipeListView
+          data={items}
+          //onViewableItemsChanged={lastItemVisible}
+          renderItem={renderItem}
+          renderHiddenItem={renderHiddenItem}
+          leftOpenValue={90}
+          stopLeftSwipe={100}
+          rightOpenValue={-170}
+          stopRightSwipe={-180}
+          previewRowKey={"0"}
+          previewOpenValue={-40}
+          previewOpenDelay={3000}
+        />
+      )}
+      {items.length === 0 && <ListEmpty />}
+      {!disableFab && showFab && (
+        <FAB
+          style={FabFlatListStyle.fab}
+          icon={fabIcon as IconSource}
+          label={fabLabel}
+          onPress={onFabPress}
+        />
+      )}
+    </View>
+  );
+};
 
 const mapDispatchToProps = {
   reduxDeleteAlarm: deleteAlarm,

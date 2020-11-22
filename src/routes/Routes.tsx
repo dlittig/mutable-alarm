@@ -9,8 +9,6 @@ const SETTINGS = i18n.t("screens.settings");
 const ABOUT = i18n.t("screens.about");
 const DONATE = i18n.t("screens.donate");
 
-console.log( i18n.t("screens.all_alarms"), i18n)
-
 export default {
   APP_NAME,
   ALL_ALARMS,

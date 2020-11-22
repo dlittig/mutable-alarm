@@ -3,7 +3,6 @@ import translations from ".";
 import { currentLocale } from "../utils";
 import { initReactI18next } from "react-i18next";
 
-console.log(currentLocale);
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
