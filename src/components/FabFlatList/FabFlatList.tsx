@@ -18,6 +18,7 @@ import R from "../../routes";
 import { TranslationProps, withTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/core";
 import { IconSource } from "react-native-paper/lib/typescript/src/components/Icon";
+import MuteDialog from "../Dialogs/MuteDialog";
 
 interface IFabFlatListProps {
   items: Array<IAlarm>;
@@ -43,6 +44,8 @@ const FabFlatList: FC<IFabFlatListProps> = ({
   const navigation = useNavigation();
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
   const [showFab, setShowFab] = useState<boolean>(true);
+  const [deleteTarget, setDeleteTarget] = useState<null | IAlarm>(null);
+  const [muteTarget, setMuteTarget] = useState<null | IAlarm>(null);
 
   const renderItem = ({ item }) => {
     if (item.id !== null) {
@@ -69,7 +72,10 @@ const FabFlatList: FC<IFabFlatListProps> = ({
     <View style={FabFlatListStyle.rowBack}>
       <TouchableOpacity
         style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
-        onPress={() => reduxToggleMuteAlarm(item.id)}
+        onPress={() => {
+          if (item.isMuted === true) reduxToggleMuteAlarm(item.id);
+          else setMuteTarget(item);
+        }}
       >
         {item.isMuted && (
           <Text style={FabFlatListStyle.backText}>{t("actions.unmute")}</Text>
@@ -98,22 +104,10 @@ const FabFlatList: FC<IFabFlatListProps> = ({
           FabFlatListStyle.backRightBtnRight,
           FabFlatListStyle.backBtn,
         ]}
-        onPress={() => {
-          setShowConfirmation(true);
-        }}
+        onPress={() => setDeleteTarget(item)}
       >
         <Text style={FabFlatListStyle.backText}>{t("actions.delete")}</Text>
       </TouchableOpacity>
-      <ConfirmDialog
-        title="Confirmation"
-        text="Are you sure to delete this alarm?"
-        isVisible={showConfirmation}
-        onAccept={() => {
-          setShowConfirmation(false);
-          reduxDeleteAlarm(item.id);
-        }}
-        onCancel={() => setShowConfirmation(false)}
-      />
     </View>
   );
 
@@ -136,6 +130,26 @@ const FabFlatList: FC<IFabFlatListProps> = ({
 
   return (
     <View style={FabFlatListStyle.container}>
+      <ConfirmDialog
+        title="Confirmation"
+        text="Are you sure to delete this alarm?"
+        isVisible={deleteTarget !== null}
+        onAccept={() => {
+          reduxDeleteAlarm(deleteTarget.id);
+          setDeleteTarget(null);
+        }}
+        onCancel={() => setDeleteTarget(null)}
+      />
+
+      <MuteDialog
+        isVisible={muteTarget !== null}
+        onAccept={() => {
+          reduxToggleMuteAlarm(muteTarget.id);
+          setMuteTarget(null);
+        }}
+        onCancel={() => setMuteTarget(null)}
+      />
+
       {items.length > 0 && (
         <SwipeListView
           data={items}

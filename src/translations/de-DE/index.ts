@@ -3,6 +3,7 @@ export const de_DE = {
     actions: {
       add: "Hinzufügen",
       cancel: "Abbrechen",
+      accept: "OK",
       set: "Übernehmen",
       start: "Start",
       reset: "Zurücksetzen",

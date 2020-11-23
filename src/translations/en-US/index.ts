@@ -3,6 +3,7 @@ export const en_US = {
     actions: {
       add: "Add",
       cancel: "Cancel",
+      accept: "OK",
       set: "Set",
       start: "Start",
       reset: "Reset",
