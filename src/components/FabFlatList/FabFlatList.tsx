@@ -19,6 +19,7 @@ import { TranslationProps, withTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/core";
 import { IconSource } from "react-native-paper/lib/typescript/src/components/Icon";
 import MuteDialog from "../Dialogs/MuteDialog";
+import ThemeProvider from "../../provider/ThemeProvider/ThemeProvider";
 
 interface IFabFlatListProps {
   items: Array<IAlarm>;
@@ -69,46 +70,65 @@ const FabFlatList: FC<IFabFlatListProps> = ({
   };
 
   const renderHiddenItem = ({ item }) => (
-    <View style={FabFlatListStyle.rowBack}>
-      <TouchableOpacity
-        style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
-        onPress={() => {
-          if (item.isMuted === true) reduxToggleMuteAlarm(item.id, null, null);
-          else setMuteTarget(item);
-        }}
-      >
-        {item.isMuted && (
-          <Text style={FabFlatListStyle.backText}>{t("actions.unmute")}</Text>
-        )}
-        {!item.isMuted && (
-          <Text style={FabFlatListStyle.backText}>{t("actions.mute")}</Text>
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          FabFlatListStyle.backRightBtn,
-          FabFlatListStyle.backRightBtnLeft,
-          FabFlatListStyle.backBtn,
-        ]}
-        onPress={() =>
-          navigation.navigate(R.ADD_ALARM, {
-            ...item,
-          })
-        }
-      >
-        <Text style={FabFlatListStyle.backText}>{t("actions.edit")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          FabFlatListStyle.backRightBtn,
-          FabFlatListStyle.backRightBtnRight,
-          FabFlatListStyle.backBtn,
-        ]}
-        onPress={() => setDeleteTarget(item)}
-      >
-        <Text style={FabFlatListStyle.backText}>{t("actions.delete")}</Text>
-      </TouchableOpacity>
-    </View>
+    <ThemeProvider.Consumer>
+      {(theme) => (
+        <View style={FabFlatListStyle.rowBack}>
+          <TouchableOpacity
+            style={[
+              FabFlatListStyle.backBtn,
+              FabFlatListStyle.backRightBtn,
+              FabFlatListStyle[`${theme}Border`],
+            ]}
+            onPress={() => {
+              if (item.isMuted === true)
+                reduxToggleMuteAlarm(item.id, null, null);
+              else setMuteTarget(item);
+            }}
+          >
+            {item.isMuted && (
+              <Text style={FabFlatListStyle[`${theme}Text`]}>
+                {t("actions.unmute")}
+              </Text>
+            )}
+            {!item.isMuted && (
+              <Text style={FabFlatListStyle[`${theme}Text`]}>
+                {t("actions.mute")}
+              </Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              FabFlatListStyle.backRightBtn,
+              FabFlatListStyle.backRightBtnLeft,
+              FabFlatListStyle.backBtn,
+              FabFlatListStyle[`${theme}Border`]
+            ]}
+            onPress={() =>
+              navigation.navigate(R.ADD_ALARM, {
+                ...item,
+              })
+            }
+          >
+            <Text style={FabFlatListStyle[`${theme}Text`]}>
+              {t("actions.edit")}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              FabFlatListStyle.backRightBtn,
+              FabFlatListStyle.backRightBtnRight,
+              FabFlatListStyle.backBtn,
+              FabFlatListStyle[`${theme}Border`]
+            ]}
+            onPress={() => setDeleteTarget(item)}
+          >
+            <Text style={FabFlatListStyle[`${theme}Text`]}>
+              {t("actions.delete")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </ThemeProvider.Consumer>
   );
 
   const lastItemVisible = ({ viewableItems }) => {

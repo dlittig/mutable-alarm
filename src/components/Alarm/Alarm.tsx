@@ -23,8 +23,6 @@ const Alarm: FC<IAlarm> = ({
   scheduleMode,
 }) => {
   const { t } = useTranslation();
-  const [muted, setMuted] = useState(isMuted);
-  const toggleSwitch = () => setMuted(!muted);
   const isDayActive = (day) => weekdays.includes(day);
 
   return (
@@ -52,7 +50,7 @@ const Alarm: FC<IAlarm> = ({
                   ))}
                 </View>
               )}
-              {muted && <MaterialCommunityIcons name="restore" size={25} />}
+              {isMuted && <MaterialCommunityIcons name="restore" size={25} />}
             </View>
           </Card>
         )}

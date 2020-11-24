@@ -57,6 +57,7 @@ const Card: FC<ICard> = ({
             style={[
               CardStyle.container,
               CardStyle[`${theme}Colors`],
+              CardStyle[`${theme}Borders`],
               CardStyle[alignment],
               fixedHight > 0 && {
                 height: fixedHight,

@@ -46,12 +46,26 @@ const FabFlatListStyle = StyleSheet.create({
   },
   backBtn: {
     padding: 5,
-    borderColor: "#333",
     borderWidth: 1,
     borderRadius: 10,
   },
-  backText: {
+  lightText: {
     color: "#333",
+  },
+  blackText: {
+    color: "#ddd",
+  },
+  darkText: {
+    color: "#aaa",
+  },
+  lightBorder: {
+    borderColor: "#333",
+  },
+  blackBorder: {
+    borderColor: "#ddd",
+  },
+  darkBorder: {
+    borderColor: "#aaa",
   },
 });
 

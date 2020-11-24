@@ -37,6 +37,7 @@ const CardStyle = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 4,
   },
+  black: {},
   fixedHeight: {
     height: 80,
   },
@@ -50,7 +51,8 @@ const CardStyle = StyleSheet.create({
   },
   blackColors: {
     backgroundColor: ThemeColors.BlackColors.card,
-    shadowColor: ThemeColors.BlackColors.cardShadow,
+    borderColor: ThemeColors.BlackColors.cardHighlight,
+    borderWidth: 1,
   },
 });
 
