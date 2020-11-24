@@ -19,7 +19,7 @@ const get = (scheme) => {
 
   let theme: Theme = {} as Theme;
 
-  if (scheme === THEMES.DARK || scheme === THEMES.BLACK) {
+  if (scheme === THEMES.DARK) {
     theme = {
       ...DarkTheme,
       dark: scheme !== THEMES.LIGHT,
@@ -31,6 +31,20 @@ const get = (scheme) => {
         notification: values.card,
         text: values.text,
         border: values.background,
+      },
+    };
+  } else if (scheme === THEMES.BLACK) {
+    theme = {
+      ...DarkTheme,
+      dark: scheme !== THEMES.LIGHT,
+      colors: {
+        ...DarkTheme.colors,
+        primary: values.primary,
+        background: values.background,
+        card: values.card,
+        notification: values.card,
+        text: values.text,
+        border: values.cardHighlight,
       },
     };
   } else {
