@@ -24,7 +24,7 @@ interface IFabFlatListProps {
   items: Array<IAlarm>;
   onFabPress: () => any;
   reduxDeleteAlarm: (number) => any;
-  reduxToggleMuteAlarm: (number) => any;
+  reduxToggleMuteAlarm: (number, boolean, string) => any;
   fabLabel: string;
   fabIcon: ReactNode;
   disableFab: boolean;
@@ -73,7 +73,7 @@ const FabFlatList: FC<IFabFlatListProps> = ({
       <TouchableOpacity
         style={[FabFlatListStyle.backBtn, FabFlatListStyle.backRightBtn]}
         onPress={() => {
-          if (item.isMuted === true) reduxToggleMuteAlarm(item.id);
+          if (item.isMuted === true) reduxToggleMuteAlarm(item.id, null, null);
           else setMuteTarget(item);
         }}
       >
@@ -143,8 +143,8 @@ const FabFlatList: FC<IFabFlatListProps> = ({
 
       <MuteDialog
         isVisible={muteTarget !== null}
-        onAccept={() => {
-          reduxToggleMuteAlarm(muteTarget.id);
+        onAccept={(muteIndefinitely, daysToMute) => {
+          reduxToggleMuteAlarm(muteTarget.id, muteIndefinitely, daysToMute);
           setMuteTarget(null);
         }}
         onCancel={() => setMuteTarget(null)}

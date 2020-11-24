@@ -2,6 +2,7 @@ export interface IAlarm {
   id: string;
   time: number;
   isMuted: boolean;
+  mutedUntil: null | number;
   isSnoozed: boolean;
   weekdays: Array<DAYS>;
   name: string;

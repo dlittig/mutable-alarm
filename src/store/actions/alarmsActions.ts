@@ -11,9 +11,17 @@ export const updateAlarm = (alarm: IAlarm) => ({
   payload: alarm,
 });
 
-export const toggleMuteAlarm = (alarmId: number) => ({
+export const toggleMuteAlarm = (
+  alarmId: number,
+  muteIndefinitely: boolean,
+  muteDays: string
+) => ({
   type: AlarmsConstants.TOGGLE_MUTE_ALARM,
-  payload: alarmId,
+  payload: {
+    id: alarmId,
+    muteIndefinitely,
+    muteDays,
+  },
 });
 
 export const deleteAlarm = (alarmId: number) => ({
