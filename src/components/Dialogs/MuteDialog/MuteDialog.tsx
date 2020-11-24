@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
 } from "react-native-paper";
+import { calculateMuteEnd } from "../../../utils/date";
 
 const MuteDialogStyle = StyleSheet.create({
   view: {
@@ -37,8 +38,7 @@ const MuteDialog: FC<IMuteDialog> = ({ onAccept, onCancel, isVisible }) => {
   const [daysToMute, setDaysToMute] = useState("0");
   const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value);
 
-  const date = new Date();
-  date.setDate(date.getDate() + 1 + parseInt(daysToMute));
+  const date = calculateMuteEnd(new Date(), parseInt(daysToMute));
 
   return (
     <Portal>
