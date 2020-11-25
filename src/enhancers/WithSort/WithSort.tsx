@@ -6,6 +6,7 @@ export const withSort = (Component) => {
     sort = (items, sort, order) => {
       if (items !== undefined && items.length > 0) {
         const result = sortBy(items, sort, order);
+        console.log("SORTED RES", result)
         return result;
       }
       return [];

@@ -12,24 +12,27 @@ import { IAlarm } from "../../models/Alarm";
 import { useTranslation } from "react-i18next";
 import BaseView from "../../components/BaseView";
 import { AddAlarmStyle } from "./AddAlarm.style";
-import { addAlarm as addAlarmAction } from "../../store/actions";
+import { addAlarm as addAlarmAction, updateAlarm } from "../../store/actions";
 import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
 
 interface Props {
   reduxAddAlarm: (IAlarm) => void;
+  reduxUpdateAlarm: (IAlarm) => void;
 }
 
-const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
+const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const state = navigation.dangerouslyGetParent().dangerouslyGetState();
 
-  const routeParams = state.routes[state.index].params;
+  const routeParams = state.routes[state.index].params as IAlarm;
 
   const take = (key, fallback) =>
     typeof routeParams !== "undefined" && typeof routeParams[key] !== undefined
       ? routeParams[key]
       : fallback;
+
+  console.log("RR", routeParams);
 
   const [text, setText] = useState(take("name", ""));
   const [weekdays, setWeekdays] = useState(take("weekdays", []));
@@ -52,16 +55,23 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
 
     const model: IAlarm = {
       id: uuid.v1(),
+      name: text,
       time: time,
       isMuted: false,
+      mutedUntil: null,
       isSnoozed: false,
       weekdays: weekdays,
-      name: text,
       scheduleMode: scheduleMode,
       scheduleValue: scheduleValue,
     };
 
-    reduxAddAlarm(model);
+    if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
+      model.id = routeParams.id;
+      reduxUpdateAlarm(model);
+    } else {
+      reduxAddAlarm(model);
+    }
+
     navigation.navigate(Routes.APP_NAME);
   };
 
@@ -102,6 +112,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm }) => {
 
 const mapDispatchToProps = {
   reduxAddAlarm: addAlarmAction,
+  reduxUpdateAlarm: updateAlarm,
 };
 
 export default connect(null, mapDispatchToProps)(AddAlarm);
