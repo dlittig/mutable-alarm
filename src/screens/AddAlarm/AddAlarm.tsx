@@ -8,7 +8,7 @@ import { TextInput, FAB, Caption } from "react-native-paper";
 
 import Routes from "../../routes";
 import Time from "../../components/Time";
-import { IAlarm } from "../../models/Alarm";
+import { DAYS, IAlarm } from "../../models/Alarm";
 import { useTranslation } from "react-i18next";
 import BaseView from "../../components/BaseView";
 import { AddAlarmStyle } from "./AddAlarm.style";
@@ -35,10 +35,14 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
   console.log("RR", routeParams);
 
   const [text, setText] = useState(take("name", ""));
-  const [weekdays, setWeekdays] = useState(take("weekdays", []));
-  const [time, setTime] = useState(take("time", new Date().getTime()));
-  const [scheduleValue, setScheduleValue] = useState(take("scheduleValue", 0));
-  const [scheduleMode, setScheduleMode] = useState(take("scheduleMode", null));
+  const [weekdays, setWeekdays] = useState<Array<DAYS>>(take("weekdays", []));
+  const [time, setTime] = useState<number>(take("time", new Date().getTime()));
+  const [scheduleValue, setScheduleValue] = useState<string>(
+    take("scheduleValue", "0")
+  );
+  const [scheduleMode, setScheduleMode] = useState<string | null>(
+    take("scheduleMode", null)
+  );
 
   const onSave = () => {
     if (text === "") {
@@ -53,10 +57,16 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
       return false;
     }
 
+    // Setting to start of linux epoch to save data in storage
+    const finalDate = new Date(time);
+    finalDate.setFullYear(1970);
+    finalDate.setMonth(0);
+    finalDate.setDate(1);
+
     const model: IAlarm = {
       id: uuid.v1(),
       name: text,
-      time: time,
+      time: finalDate.getTime(),
       isMuted: false,
       mutedUntil: null,
       isSnoozed: false,
