@@ -1,8 +1,8 @@
 import React, { useState, FC } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { AlarmStyle } from "./Alarm.style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Switch } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { getCurrentTime } from "../../utils";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { IAlarm, WEEKDAYS } from "../../models/Alarm";
@@ -42,7 +42,7 @@ const Alarm: FC<IAlarm> = ({
                       key={index}
                       style={[
                         AlarmStyle.weekday,
-                        isDayActive(day) ? AlarmStyle.weekdayActive : null,
+                        isDayActive(day) ? AlarmStyle.weekdayActive : AlarmStyle[`${theme}WeekdayInactive`],
                       ]}
                     >
                       {t(`days.short.${day}`)}
@@ -50,7 +50,6 @@ const Alarm: FC<IAlarm> = ({
                   ))}
                 </View>
               )}
-              {isMuted && <MaterialCommunityIcons name="restore" size={25} />}
             </View>
           </Card>
         )}

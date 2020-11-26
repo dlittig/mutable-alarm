@@ -1,2 +1,7 @@
-import Alarm from './Alarm'
-export default Alarm
+import AlarmActive from "./Alarm.Active";
+import AlarmMuted from "./Alarm.Muted";
+
+export default {
+  Active: AlarmActive,
+  Muted: AlarmMuted,
+};

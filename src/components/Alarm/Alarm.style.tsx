@@ -8,8 +8,7 @@ const AlarmStyle = StyleSheet.create({
     alignItems: "flex-start",
   },
   weekday: {
-    marginRight: 5,
-    marginLeft: 5,
+    marginRight: 10,
   },
   weekdayActive: {
     fontWeight: "bold",
@@ -25,6 +24,15 @@ const AlarmStyle = StyleSheet.create({
   },
   black: {
     color: ThemeColors.BlackColors.text,
+  },
+  darkWeekdayInactive: {
+    color: ThemeColors.DarkColors.textInactive,
+  },
+  lightWeekdayInactive: {
+    color: ThemeColors.LightColors.textInactive,
+  },
+  blackWeekdayInactive: {
+    color: ThemeColors.BlackColors.textInactive,
   },
 });
 
