@@ -1,12 +1,11 @@
 import React, { FC, ReactNode, useState } from "react";
 
-import { FAB } from "react-native-paper";
-import { View, Text, TouchableOpacity } from "react-native";
+import { FAB, Text } from "react-native-paper";
+import { View, TouchableOpacity } from "react-native";
 
 import { SwipeListView } from "react-native-swipe-list-view";
 import { compose } from "redux";
 import { withSort } from "../../enhancers/WithSort";
-import { withBottomElement } from "../../enhancers/WithBottomElement";
 import { connect } from "react-redux";
 import { deleteAlarm, toggleMuteAlarm } from "../../store/actions";
 import { IAlarm } from "../../models/Alarm";
@@ -15,7 +14,7 @@ import Alarm from "../Alarm";
 import ListEmpty from "../ListEmpty";
 import ConfirmDialog from "../Dialogs/ConfirmDialog";
 import R from "../../routes";
-import { TranslationProps, withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/core";
 import { IconSource } from "react-native-paper/lib/typescript/src/components/Icon";
 import MuteDialog from "../Dialogs/MuteDialog";
@@ -43,31 +42,39 @@ const FabFlatList: FC<IFabFlatListProps> = ({
   t,
 }) => {
   const navigation = useNavigation();
-  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
-  const [showFab, setShowFab] = useState<boolean>(true);
   const [deleteTarget, setDeleteTarget] = useState<null | IAlarm>(null);
   const [muteTarget, setMuteTarget] = useState<null | IAlarm>(null);
 
-  const renderItem = ({ item }) => {
-    if (item.id !== null) {
-      return (
-        <View>
-          <Alarm
-            id={item.id}
-            isMuted={item.isMuted}
-            time={item.time}
-            name={item.name}
-            weekdays={item.weekdays}
-            isSnoozed={item.isSnoozed}
-            scheduleMode={item.scheduleMode}
-            scheduleValue={item.scheduleValue}
-          />
-        </View>
-      );
-    } else {
-      return <View></View>;
-    }
-  };
+  const renderItem = ({ item }) =>
+    !item.isMuted ? (
+      <View>
+        <Alarm.Active
+          id={item.id}
+          isMuted={item.isMuted}
+          time={item.time}
+          name={item.name}
+          weekdays={item.weekdays}
+          isSnoozed={item.isSnoozed}
+          mutedUntil={item.mutedUntil}
+          scheduleMode={item.scheduleMode}
+          scheduleValue={item.scheduleValue}
+        />
+      </View>
+    ) : (
+      <View>
+        <Alarm.Muted
+          id={item.id}
+          isMuted={item.isMuted}
+          time={item.time}
+          name={item.name}
+          weekdays={item.weekdays}
+          isSnoozed={item.isSnoozed}
+          mutedUntil={item.mutedUntil}
+          scheduleMode={item.scheduleMode}
+          scheduleValue={item.scheduleValue}
+        />
+      </View>
+    );
 
   const renderHiddenItem = ({ item }) => (
     <ThemeProvider.Consumer>
@@ -101,7 +108,7 @@ const FabFlatList: FC<IFabFlatListProps> = ({
               FabFlatListStyle.backRightBtn,
               FabFlatListStyle.backRightBtnLeft,
               FabFlatListStyle.backBtn,
-              FabFlatListStyle[`${theme}Border`]
+              FabFlatListStyle[`${theme}Border`],
             ]}
             onPress={() =>
               navigation.navigate(R.ADD_ALARM, {
@@ -118,7 +125,7 @@ const FabFlatList: FC<IFabFlatListProps> = ({
               FabFlatListStyle.backRightBtn,
               FabFlatListStyle.backRightBtnRight,
               FabFlatListStyle.backBtn,
-              FabFlatListStyle[`${theme}Border`]
+              FabFlatListStyle[`${theme}Border`],
             ]}
             onPress={() => setDeleteTarget(item)}
           >
@@ -130,23 +137,6 @@ const FabFlatList: FC<IFabFlatListProps> = ({
       )}
     </ThemeProvider.Consumer>
   );
-
-  const lastItemVisible = ({ viewableItems }) => {
-    const count = Object.values(items).length;
-
-    // If last viewable item is the last of the list
-    if (viewableItems.length < count) {
-      if (
-        viewableItems[viewableItems.length - 1].item.id === items[count - 1].id
-      ) {
-        setShowFab(false);
-      } else {
-        setShowFab(true);
-      }
-    } else {
-      setShowFab(true);
-    }
-  };
 
   return (
     <View style={FabFlatListStyle.container}>
@@ -173,7 +163,10 @@ const FabFlatList: FC<IFabFlatListProps> = ({
       {items.length > 0 && (
         <SwipeListView
           data={items}
-          //onViewableItemsChanged={lastItemVisible}
+          useFlatList={true}
+          ListFooterComponent={() => (
+            <View style={FabFlatListStyle.biggerHeight}></View>
+          )}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
           leftOpenValue={90}
@@ -186,7 +179,7 @@ const FabFlatList: FC<IFabFlatListProps> = ({
         />
       )}
       {items.length === 0 && <ListEmpty />}
-      {!disableFab && showFab && (
+      {!disableFab && (
         <FAB
           style={FabFlatListStyle.fab}
           icon={fabIcon as IconSource}
@@ -206,7 +199,6 @@ const mapDispatchToProps = {
 const enhance = compose(
   connect(null, mapDispatchToProps),
   withSort,
-  withBottomElement,
   withTranslation()
 );
 

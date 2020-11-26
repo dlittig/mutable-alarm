@@ -35,13 +35,6 @@ export const alarmsReducer = produce(
             : calculateMuteEnd(new Date(), parseInt(muteDays)).getTime();
         }
 
-        console.log(
-          calculateMuteEnd(new Date(), parseInt(muteDays)),
-          parseInt(muteDays),
-          muteDays
-        );
-        console.log("STATE", state);
-
         break;
       }
       case AlarmsConstants.UPDATE_ALARM: {

@@ -32,8 +32,6 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
       ? routeParams[key]
       : fallback;
 
-  console.log("RR", routeParams);
-
   const [text, setText] = useState(take("name", ""));
   const [weekdays, setWeekdays] = useState<Array<DAYS>>(take("weekdays", []));
   const [time, setTime] = useState<number>(take("time", new Date().getTime()));
@@ -75,9 +73,11 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
       scheduleValue: scheduleValue,
     };
 
-    if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
-      model.id = routeParams.id;
-      reduxUpdateAlarm(model);
+    if (typeof routeParams !== "undefined") {
+      if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
+        model.id = routeParams.id;
+        reduxUpdateAlarm(model);
+      }
     } else {
       reduxAddAlarm(model);
     }

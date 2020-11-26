@@ -40,6 +40,11 @@ const MuteDialog: FC<IMuteDialog> = ({ onAccept, onCancel, isVisible }) => {
 
   const date = calculateMuteEnd(new Date(), parseInt(daysToMute));
 
+  const reset = () => {
+    setMuteIndefinitely(false);
+    setDaysToMute("0");
+  };
+
   return (
     <Portal>
       <Dialog visible={isVisible} onDismiss={onCancel}>
@@ -74,8 +79,20 @@ const MuteDialog: FC<IMuteDialog> = ({ onAccept, onCancel, isVisible }) => {
           </View>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => onCancel()}>{t("actions.cancel")}</Button>
-          <Button onPress={() => onAccept(muteIndefinitely, daysToMute)}>
+          <Button
+            onPress={() => {
+              reset();
+              onCancel();
+            }}
+          >
+            {t("actions.cancel")}
+          </Button>
+          <Button
+            onPress={() => {
+              reset();
+              onAccept(muteIndefinitely, daysToMute);
+            }}
+          >
             {t("actions.accept")}
           </Button>
         </Dialog.Actions>

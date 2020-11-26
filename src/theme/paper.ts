@@ -32,7 +32,7 @@ const get = (scheme) => {
   } else {
     theme = {
       ...DefaultTheme,
-      roundness: 2,
+      roundness: 6,
       colors: {
         ...DefaultTheme.colors,
         primary: values.primary,

@@ -5,6 +5,7 @@ export interface IColors {
   cardHighlight: string;
   cardShadow: string;
   text: string;
+  textInactive: string;
   background: string;
 }
 
@@ -21,6 +22,7 @@ const DarkColors: IColors = {
   cardHighlight: "#444444",
   cardShadow: "#3f3f3f",
   text: "#ffffff",
+  textInactive: "#bbbbbb",
   background: "#222",
 };
 
@@ -31,6 +33,7 @@ const BlackColors: IColors = {
   cardHighlight: "#444444",
   cardShadow: "#000000",
   text: "#ffffff",
+  textInactive: "#bbbbbb",
   background: "#000000",
 };
 
@@ -41,6 +44,7 @@ const LightColors: IColors = {
   cardHighlight: "#eeeeee",
   cardShadow: "#000",
   text: "rgb(28, 28, 30)",
+  textInactive: "#666",
   background: "rgb(242, 242, 242)",
 };
 

@@ -13,6 +13,9 @@ const FabFlatListStyle = StyleSheet.create({
   container: {
     flex: 1,
   },
+  biggerHeight: {
+    height: 80
+  },
   rowFront: {
     alignItems: "center",
     backgroundColor: "#CCC",
