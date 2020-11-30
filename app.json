@@ -11,6 +11,12 @@
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "android"
-    ]
+    ],
+    "android": {
+      "package": "de.dlittig.mutablealarm"
+    },
+    "ios": {
+      "bundleIdentifier": "de.dlittig.mutablealarm"
+    }
   }
 }

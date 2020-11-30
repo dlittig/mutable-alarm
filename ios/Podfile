@@ -43,4 +43,8 @@ target 'mutableAlarm' do
 
   # Automatically detect installed unimodules
   use_unimodules!
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
+
 end

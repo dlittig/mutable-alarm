@@ -1,13 +1,16 @@
-package com.mutablealarm;
+package de.dlittig.mutablealarm;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+import io.expo.appearance.RNCAppearancePackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.mutablealarm.generated.BasePackageList;
+import de.dlittig.mutablealarm.generated.BasePackageList;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
@@ -40,9 +43,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new RNCAppearancePackage(),
+          new VectorIconsPackage(),
           new ReanimatedPackage(),
           new RNGestureHandlerPackage(),
           new RNScreensPackage(),
+          new SafeAreaContextPackage(),
           new ModuleRegistryAdapter(mModuleRegistryProvider)
       );
     }

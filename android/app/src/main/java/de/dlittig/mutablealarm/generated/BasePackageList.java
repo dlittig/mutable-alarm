@@ -1,4 +1,4 @@
-package com.mutablealarm.generated;
+package de.dlittig.mutablealarm.generated;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +18,8 @@ public class BasePackageList {
         new expo.modules.permissions.PermissionsPackage(),
         new expo.modules.securestore.SecureStorePackage(),
         new expo.modules.splashscreen.SplashScreenPackage(),
-        new expo.modules.sqlite.SQLitePackage()
+        new expo.modules.sqlite.SQLitePackage(),
+        new expo.modules.updates.UpdatesPackage()
     );
   }
 }
