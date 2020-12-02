@@ -4,16 +4,17 @@ import uuid from "react-native-uuid";
 import { connect } from "react-redux";
 import { ToastAndroid } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { TextInput, FAB, Caption } from "react-native-paper";
 
 import Routes from "../../routes";
+import Modules from "../../modules";
 import Time from "../../components/Time";
-import { DAYS, IAlarm } from "../../models/Alarm";
-import { useTranslation } from "react-i18next";
 import BaseView from "../../components/BaseView";
 import { AddAlarmStyle } from "./AddAlarm.style";
-import { addAlarm as addAlarmAction, updateAlarm } from "../../store/actions";
+import { DAYS, IAlarm } from "../../models/Alarm";
 import ScheduleDialog from "../../components/Dialogs/ScheduleDialog";
+import { addAlarm as addAlarmAction, updateAlarm } from "../../store/actions";
 
 interface Props {
   reduxAddAlarm: (IAlarm) => void;
@@ -42,7 +43,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
     take("scheduleMode", null)
   );
 
-  const onSave = () => {
+  const onSave = async () => {
     if (text === "") {
       ToastAndroid.showWithGravityAndOffset(
         t("toasts.alarm_name_required"),
@@ -77,9 +78,11 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
       if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
         model.id = routeParams.id;
         reduxUpdateAlarm(model);
+        await Modules.Alarm.setAlarm();
       }
     } else {
       reduxAddAlarm(model);
+      await Modules.Alarm.setAlarm();
     }
 
     navigation.navigate(Routes.APP_NAME);
