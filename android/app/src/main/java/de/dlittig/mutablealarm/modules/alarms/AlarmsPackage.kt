@@ -1,4 +1,4 @@
-package de.dlittig.mutablealarm.alarms
+package de.dlittig.mutablealarm.modules.alarms
 
 import android.view.View
 import com.facebook.react.ReactPackage

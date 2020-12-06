@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { ToastAndroid } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { TextInput, FAB, Caption } from "react-native-paper";
+import { TextInput, FAB, Caption, Button } from "react-native-paper";
 
 import Routes from "../../routes";
 import Modules from "../../modules";
@@ -78,11 +78,11 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
       if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
         model.id = routeParams.id;
         reduxUpdateAlarm(model);
-        await Modules.Alarm.setAlarm();
+        //await Modules.Alarm.setAlarm();
       }
     } else {
       reduxAddAlarm(model);
-      await Modules.Alarm.setAlarm();
+      //await Modules.Alarm.setAlarm();
     }
 
     navigation.navigate(Routes.APP_NAME);
@@ -112,6 +112,16 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
         {" every "}
         {`${scheduleValue} ${scheduleMode}`}
       </Caption>
+
+      <Button
+        onPress={async () => {
+          console.log(Modules);
+          const result = await Modules.Alarm.setAlarm();
+          console.log("R", result);
+        }}
+      >
+        ALARM
+      </Button>
 
       <FAB
         style={AddAlarmStyle.fab}

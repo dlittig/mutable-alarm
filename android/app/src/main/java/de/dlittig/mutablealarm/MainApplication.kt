@@ -11,9 +11,9 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage
 import com.swmansion.reanimated.ReanimatedPackage
 import com.swmansion.rnscreens.RNScreensPackage
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage
-import de.dlittig.mutablealarm.alarms.AlarmsPackage
+import de.dlittig.mutablealarm.modules.alarms.AlarmsPackage
 import de.dlittig.mutablealarm.generated.BasePackageList
-import de.dlittig.mutablealarm.ringtone.RingtonePackage
+import de.dlittig.mutablealarm.modules.ringtone.RingtonePackage
 import io.expo.appearance.RNCAppearancePackage
 import org.unimodules.adapters.react.ModuleRegistryAdapter
 import org.unimodules.adapters.react.ReactModuleRegistryProvider
