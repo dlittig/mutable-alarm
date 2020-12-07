@@ -77,12 +77,12 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
     if (typeof routeParams !== "undefined") {
       if (typeof routeParams["id"] !== "undefined" && routeParams.id !== null) {
         model.id = routeParams.id;
-        reduxUpdateAlarm(model);
-        //await Modules.Alarm.setAlarm();
+        //reduxUpdateAlarm(model);
+        await Modules.Alarm.setAlarm(model);
       }
     } else {
-      reduxAddAlarm(model);
-      //await Modules.Alarm.setAlarm();
+      //reduxAddAlarm(model);
+      await Modules.Alarm.setAlarm(model);
     }
 
     navigation.navigate(Routes.APP_NAME);
@@ -113,7 +113,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
         {`${scheduleValue} ${scheduleMode}`}
       </Caption>
 
-      <Button
+      {/* <Button
         onPress={async () => {
           console.log(Modules);
           const result = await Modules.Alarm.setAlarm();
@@ -121,7 +121,7 @@ const AddAlarm: FC<Props> = ({ reduxAddAlarm, reduxUpdateAlarm }) => {
         }}
       >
         ALARM
-      </Button>
+      </Button> */}
 
       <FAB
         style={AddAlarmStyle.fab}

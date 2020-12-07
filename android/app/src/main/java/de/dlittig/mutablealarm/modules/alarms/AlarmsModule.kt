@@ -18,17 +18,19 @@ class AlarmsModule(reactContext: ReactApplicationContext) : ReactContextBaseJava
 
   @RequiresApi(Build.VERSION_CODES.M)
   @ReactMethod
-  fun setAlarm(p: Promise) {
+  fun setAlarm(alarm: ReadableMap, p: Promise) {
     // Get AlarmManager instance
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     Log.i(TAG, "ABC")
 
     // Create intent to receive alarms
-    val intent = Intent(this.context, AlarmReceiver::class.java)
-    intent.action = AlarmReceiver.INTENT
-    intent.putExtra(AlarmReceiver.CONTENT_EXTRA, "Medium AlarmManager Demo")
+    val intent = Intent(this.context, AlarmReceiver::class.java).apply {
+      action = AlarmReceiver.INTENT
+      putExtra(AlarmReceiver.CONTENT_EXTRA, alarm.toHashMap())
+    }
 
+    // Create pending intent from intent
     val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
 
     // Alarm time

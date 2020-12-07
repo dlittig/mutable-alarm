@@ -1,11 +1,12 @@
 import { NativeModules } from "react-native";
+import { IAlarm } from "../models/Alarm";
 
 type AlarmsModuleType = {
-  setAlarm: () => Promise<boolean>
+  setAlarm: (alarm: IAlarm) => Promise<boolean>
 }
 
 type RingtoneModuleType = {
-  selectRingtone: () => Promise<boolean>
+  selectRingtone: (alarm: IAlarm) => Promise<boolean>
 }
 
 export default {

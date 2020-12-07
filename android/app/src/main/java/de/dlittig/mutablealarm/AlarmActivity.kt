@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.facebook.react.bridge.ReadableMap
+import de.dlittig.mutablealarm.receivers.AlarmReceiver
+import java.io.Serializable
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,7 +20,9 @@ import android.widget.TextView
  */
 class AlarmActivity : AppCompatActivity() {
   private lateinit var fullscreenContent: TextView
+  /*
   private lateinit var fullscreenContentControls: LinearLayout
+
   private val hideHandler = Handler()
 
   @SuppressLint("InlinedApi")
@@ -42,12 +48,16 @@ class AlarmActivity : AppCompatActivity() {
   private var isFullscreen: Boolean = false
 
   private val hideRunnable = Runnable { hide() }
+  */
+
+  private lateinit var currentAlarm: HashMap<String, Any>
 
   /**
    * Touch listener to use for in-layout UI controls to delay hiding the
    * system UI. This is to prevent the jarring behavior of controls going away
    * while interacting with activity UI.
    */
+  /*
   private val delayHideTouchListener = View.OnTouchListener { view, motionEvent ->
     when (motionEvent.action) {
       MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
@@ -59,26 +69,35 @@ class AlarmActivity : AppCompatActivity() {
     }
     false
   }
+  */
 
   @SuppressLint("ClickableViewAccessibility")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    this.currentAlarm = intent.getSerializableExtra(AlarmReceiver.CONTENT_EXTRA) as HashMap<String, Any>
 
     setContentView(R.layout.activity_alarm)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-    isFullscreen = true
+    //isFullscreen = true
 
     // Set up the user interaction to manually show or hide the system UI.
     fullscreenContent = findViewById(R.id.fullscreen_content)
-    fullscreenContent.setOnClickListener { toggle() }
+    //fullscreenContent.setOnClickListener { toggle() }
 
-    fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
+    //fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
 
     // Upon interacting with UI controls, delay any scheduled hide()
     // operations to prevent the jarring behavior of controls going away
     // while interacting with the UI.
-    findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+    var resultText = "";
+    for (entry in this.currentAlarm.entries) {
+      resultText += "${entry.key}: ${entry.value} \n"
+    }
+
+    findViewById<TextView>(R.id.fullscreen_content).text = resultText
+    //findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -87,9 +106,10 @@ class AlarmActivity : AppCompatActivity() {
     // Trigger the initial hide() shortly after the activity has been
     // created, to briefly hint to the user that UI controls
     // are available.
-    delayedHide(100)
+    // delayedHide(100)
   }
 
+  /*
   private fun toggle() {
     if (isFullscreen) {
       hide()
@@ -120,15 +140,18 @@ class AlarmActivity : AppCompatActivity() {
     hideHandler.removeCallbacks(hidePart2Runnable)
     hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
   }
+  */
 
   /**
    * Schedules a call to hide() in [delayMillis], canceling any
    * previously scheduled calls.
    */
+  /*
   private fun delayedHide(delayMillis: Int) {
     hideHandler.removeCallbacks(hideRunnable)
     hideHandler.postDelayed(hideRunnable, delayMillis.toLong())
   }
+   */
 
   companion object {
     /**
@@ -147,6 +170,6 @@ class AlarmActivity : AppCompatActivity() {
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
-    private const val UI_ANIMATION_DELAY = 300
+    //private const val UI_ANIMATION_DELAY = 300
   }
 }

@@ -19,15 +19,15 @@ class AlarmReceiver: BroadcastReceiver() {
     Log.i(TAG, "Received intent")
     if(intent?.action === INTENT) {
       Log.i(TAG, "We are in")
-      val message = intent.getStringExtra(CONTENT_EXTRA)
+      val alarmMap = intent.getSerializableExtra(CONTENT_EXTRA)
       //Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
       val alarmIntent = Intent(context, AlarmActivity::class.java).apply {
-        putExtra(CONTENT_EXTRA, message)
+        putExtra(CONTENT_EXTRA, alarmMap)
         flags = FLAG_ACTIVITY_NEW_TASK
       }
 
-      context?.startActivity(alarmIntent, )
+      context?.startActivity(alarmIntent)
     }
   }
 }
