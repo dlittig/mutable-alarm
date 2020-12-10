@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources>
   <string name="app_name">mutableAlarm</string>
-  <string name="title_activity_alarm">FullscreenActivity</string>
-  <string name="dummy_button">Dummy Button</string>
-  <string name="dummy_content">DUMMY\nCONTENT</string>
+  <string name="snooze_button">Snooze</string>
+  <string name="dismiss_button">Dismiss</string>
+  <string name="title_activity_alarm">Active Alarm</string>
 </resources>

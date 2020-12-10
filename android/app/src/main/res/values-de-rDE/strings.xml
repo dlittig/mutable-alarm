@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">mutableAlarm</string>
+  <string name="snooze_button">Schlummern</string>
+  <string name="dismiss_button">Beenden</string>
+  <string name="title_activity_alarm">Aktiver Alarm</string>
+</resources>

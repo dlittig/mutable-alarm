@@ -2,24 +2,32 @@ package de.dlittig.mutablealarm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.ReadableMap
+import de.dlittig.mutablealarm.modules.alarms.AlarmsModule
 import de.dlittig.mutablealarm.receivers.AlarmReceiver
 import java.io.Serializable
+import java.time.Instant
+import java.time.ZoneId
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class AlarmActivity : AppCompatActivity() {
-  private lateinit var fullscreenContent: TextView
+  private lateinit var alarmTime: TextView
+  private lateinit var alarmLabel: TextView
+  private val TAG = "AM.AlarmActivity"
   /*
   private lateinit var fullscreenContentControls: LinearLayout
 
@@ -71,6 +79,44 @@ class AlarmActivity : AppCompatActivity() {
   }
   */
 
+  private val dismissTouchListener = View.OnTouchListener { view, event ->
+    when (event.action) {
+      MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
+        this.dismiss()
+      }
+      MotionEvent.ACTION_UP -> view.performClick()
+      else -> {
+      }
+    }
+    false
+  }
+
+  @RequiresApi(Build.VERSION_CODES.M)
+  private val snoozeTouchListener = View.OnTouchListener { view, event ->
+    when (event.action) {
+      MotionEvent.ACTION_DOWN -> if (AUTO_HIDE) {
+        this.snooze()
+      }
+      MotionEvent.ACTION_UP -> view.performClick()
+      else -> {
+      }
+    }
+    false
+  }
+
+  private fun dismiss() {
+    Log.i(TAG, "Dismissed")
+    this.finish()
+  }
+
+  @RequiresApi(Build.VERSION_CODES.M)
+  private fun snooze() {
+    Log.i(TAG, "Snoozed")
+    AlarmsModule.setAlarmInAndroid(this.applicationContext, this.currentAlarm, 2)
+
+    this.finish()
+  }
+
   @SuppressLint("ClickableViewAccessibility")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -83,7 +129,8 @@ class AlarmActivity : AppCompatActivity() {
     //isFullscreen = true
 
     // Set up the user interaction to manually show or hide the system UI.
-    fullscreenContent = findViewById(R.id.fullscreen_content)
+    alarmTime = findViewById(R.id.alarm_time)
+    alarmLabel = findViewById(R.id.alarm_name)
     //fullscreenContent.setOnClickListener { toggle() }
 
     //fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
@@ -96,62 +143,21 @@ class AlarmActivity : AppCompatActivity() {
       resultText += "${entry.key}: ${entry.value} \n"
     }
 
-    findViewById<TextView>(R.id.fullscreen_content).text = resultText
-    //findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+    // Convert time to smth readable
+    val time = Instant.ofEpochMilli((this.currentAlarm["time"] as Double).toLong()).atZone(ZoneId.systemDefault())
+    alarmTime.text = "${padd(time.hour)}:${padd(time.minute)}"
+    alarmLabel.text = this.currentAlarm["name"] as String
+
+    findViewById<Button>(R.id.snooze_button).setOnTouchListener(this.snoozeTouchListener)
+    findViewById<Button>(R.id.dismiss_button).setOnTouchListener(this.dismissTouchListener)
   }
 
-  override fun onPostCreate(savedInstanceState: Bundle?) {
-    super.onPostCreate(savedInstanceState)
-
-    // Trigger the initial hide() shortly after the activity has been
-    // created, to briefly hint to the user that UI controls
-    // are available.
-    // delayedHide(100)
+  override fun onBackPressed() {
+    super.onBackPressed()
+    snooze()
   }
 
-  /*
-  private fun toggle() {
-    if (isFullscreen) {
-      hide()
-    } else {
-      show()
-    }
-  }
-
-  private fun hide() {
-    // Hide UI first
-    supportActionBar?.hide()
-    fullscreenContentControls.visibility = View.GONE
-    isFullscreen = false
-
-    // Schedule a runnable to remove the status and navigation bar after a delay
-    hideHandler.removeCallbacks(showPart2Runnable)
-    hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
-  }
-
-  private fun show() {
-    // Show the system bar
-    fullscreenContent.systemUiVisibility =
-      View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-    isFullscreen = true
-
-    // Schedule a runnable to display UI elements after a delay
-    hideHandler.removeCallbacks(hidePart2Runnable)
-    hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
-  }
-  */
-
-  /**
-   * Schedules a call to hide() in [delayMillis], canceling any
-   * previously scheduled calls.
-   */
-  /*
-  private fun delayedHide(delayMillis: Int) {
-    hideHandler.removeCallbacks(hideRunnable)
-    hideHandler.postDelayed(hideRunnable, delayMillis.toLong())
-  }
-   */
+  private fun padd(number: Int): String = if (number < 10) "0${number}" else number.toString()
 
   companion object {
     /**
@@ -165,11 +171,5 @@ class AlarmActivity : AppCompatActivity() {
      * user interaction before hiding the system UI.
      */
     private const val AUTO_HIDE_DELAY_MILLIS = 3000
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    //private const val UI_ANIMATION_DELAY = 300
   }
 }
